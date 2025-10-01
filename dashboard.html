@@ -9,58 +9,76 @@
 </head>
 <body>
 <section class="glass">
-  <h2>لوحة التحكم</h2>
-  <div id="clientData"></div>
+  <h2>لوحة العميل</h2>
+  <div id="clientData">جاري تحميل البيانات...</div>
 
   <h3>رفع المستندات</h3>
   <input type="file" id="docInput">
   <button id="uploadBtn">رفع</button>
 
   <h3>متابعة القضية</h3>
-  <div id="caseStatus"></div>
+  <div id="caseStatus">جاري التحميل...</div>
 
   <button id="logoutBtn">تسجيل خروج</button>
 </section>
 
 <script>
-auth.onAuthStateChanged(user=>{
-  if(!user) window.location.href='login.html';
-  else{
+  // التحقق من تسجيل الدخول
+  auth.onAuthStateChanged(user => {
+    if (!user) {
+      window.location.href = 'login.html';
+      return;
+    }
+
     const uid = user.uid;
-    db.collection('clients').doc(uid).get().then(doc=>{
-      if(doc.exists){
+    // جلب بيانات العميل
+    db.collection('clients').doc(uid).get().then(doc => {
+      if (doc.exists) {
         const data = doc.data();
         document.getElementById('clientData').innerHTML = `
-          <p>الاسم: ${data.name}</p>
-          <p>رقم الهوية: ${data.idNumber}</p>
-          <p>المبلغ المطلوب استرداده: ${data.amount}</p>
-          <p>البريد الإلكتروني: ${data.email}</p>
+          <p>الاسم: ${data.name || '-'}</p>
+          <p>رقم الهوية: ${data.idNumber || '-'}</p>
+          <p>المبلغ المطلوب استرداده: ${data.amount || '-'}</p>
+          <p>البريد الإلكتروني: ${data.email || '-'}</p>
         `;
-        document.getElementById('caseStatus').innerText = `حالة القضية: ${data.status}`;
+        document.getElementById('caseStatus').innerText = `حالة القضية: ${data.status || '-'}`;
+      } else {
+        document.getElementById('clientData').innerText = 'لا توجد بيانات متاحة.';
+        document.getElementById('caseStatus').innerText = '';
       }
-    });
-  }
-});
-
-document.getElementById('uploadBtn').addEventListener('click',()=>{
-  const file = document.getElementById('docInput').files[0];
-  if(!file){ alert('اختر ملف'); return; }
-  const uid = auth.currentUser.uid;
-  const storageRef = storage.ref(`documents/${uid}/${file.name}`);
-  storageRef.put(file).then(()=>{
-    storageRef.getDownloadURL().then(url=>{
-      db.collection('clients').doc(uid).update({
-        documents: firebase.firestore.FieldValue.arrayUnion(url)
-      });
-      alert('تم رفع المستند بنجاح!');
+    }).catch(err => {
+      console.error(err);
+      document.getElementById('clientData').innerText = 'حدث خطأ أثناء تحميل البيانات.';
     });
   });
-});
 
-document.getElementById('logoutBtn').addEventListener('click',()=>{
-  auth.signOut();
-  window.location.href='login.html';
-});
+  // رفع المستندات
+  document.getElementById('uploadBtn').addEventListener('click', () => {
+    const file = document.getElementById('docInput').files[0];
+    if (!file) { alert('اختر ملف'); return; }
+
+    const uid = auth.currentUser.uid;
+    const storageRef = storage.ref(`documents/${uid}/${file.name}`);
+
+    storageRef.put(file).then(() => {
+      storageRef.getDownloadURL().then(url => {
+        db.collection('clients').doc(uid).update({
+          documents: firebase.firestore.FieldValue.arrayUnion(url)
+        });
+        alert('تم رفع المستند بنجاح!');
+      });
+    }).catch(err => {
+      console.error(err);
+      alert('حدث خطأ أثناء رفع الملف.');
+    });
+  });
+
+  // تسجيل خروج
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    auth.signOut().then(() => {
+      window.location.href = 'login.html';
+    });
+  });
 </script>
 </body>
 </html>
