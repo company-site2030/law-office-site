@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة العميل - مكتب المحامي محمد العتيبي</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script>
+<script src="firebase.js"></script>
+</head>
+<body>
+<section class="glass">
+  <h2>لوحة التحكم</h2>
+  <div id="clientData"></div>
+
+  <h3>رفع المستندات</h3>
+  <input type="file" id="docInput">
+  <button id="uploadBtn">رفع</button>
+
+  <h3>متابعة القضية</h3>
+  <div id="caseStatus"></div>
+
+  <button id="logoutBtn">تسجيل خروج</button>
+</section>
+
+<script>
+auth.onAuthStateChanged(user=>{
+  if(!user) window.location.href='login.html';
+  else{
+    const uid = user.uid;
+    const docRef = db.collection('clients').doc(uid);
+    docRef.get().then(doc=>{
+      if(doc.exists){
+        const data = doc.data();
+        document.getElementById('clientData').innerHTML = `
+          <p>الاسم: ${data.name}</p>
+          <p>رقم الهوية: ${data.idNumber}</p>
+          <p>المبلغ المطلوب استرداده: ${data.amount}</p>
+          <p>البريد الإلكتروني: ${data.email}</p>
+        `;
+        document.getElementById('caseStatus').innerText = `حالة القضية: ${data.status}`;
+      }
+    });
+  }
+});
+
+// رفع المستندات
+const uploadBtn = document.getElementById('uploadBtn');
+uploadBtn.addEventListener('click',()=>{
+  const file = document.getElementById('docInput').files[0];
+  if(!file){ alert('اختر ملف'); return; }
+  const uid = auth.currentUser.uid;
+  const storageRef = storage.ref(`documents/${uid}/${file.name}`);
+  storageRef.put(file).then(()=>{
+    storageRef.getDownloadURL().then(url=>{
+      db.collection('clients').doc(uid).update({
+        documents: firebase.firestore.FieldValue.arrayUnion(url)
+      });
+      alert('تم رفع المستند بنجاح!');
+    });
+  });
+});
+
+// تسجيل خروج
+document.getElementById('logoutBtn').addEventListener('click',()=>{ auth.signOut(); window.location.href='login.html'; });
+</script>
+</body>
+</html>
