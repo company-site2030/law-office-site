@@ -3,12 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>تسجيل عميل - مكتب المحامي محمد العتيبي</title>
+<title>تسجيل حساب - مكتب المحامي محمد العتيبي</title>
 <link rel="stylesheet" href="style.css">
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script>
 <script src="firebase.js"></script>
 </head>
 <body>
@@ -27,7 +23,7 @@
 
 <script>
 const registerForm = document.getElementById('registerForm');
-registerForm.addEventListener('submit', (e)=>{
+registerForm.addEventListener('submit', e=>{
   e.preventDefault();
   const name = document.getElementById('name').value;
   const idNumber = document.getElementById('idNumber').value;
@@ -35,18 +31,17 @@ registerForm.addEventListener('submit', (e)=>{
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
 
-  auth.createUserWithEmailAndPassword(email, password)
-    .then(userCredential => {
+  auth.createUserWithEmailAndPassword(email,password)
+    .then(userCredential=>{
       const uid = userCredential.user.uid;
-      return db.collection('clients').doc(uid).set({
-        name, idNumber, amount, email, status: 'قيد الانتظار', documents: []
+      db.collection('clients').doc(uid).set({
+        name,idNumber,amount,email,status:'قيد الانتظار',documents:[]
+      }).then(()=>{
+        alert('تم إنشاء الحساب بنجاح!');
+        window.location.href='dashboard.html';
       });
     })
-    .then(()=>{
-      alert('تم إنشاء الحساب بنجاح!');
-      window.location.href = 'dashboard.html';
-    })
-    .catch(err => alert(err.message));
+    .catch(err=>alert(err.message));
 });
 </script>
 </body>
