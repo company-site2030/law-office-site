@@ -8,42 +8,36 @@
   <script defer src="assets/script.js"></script>
 </head>
 <body dir="rtl" class="theme">
-  <canvas id="bg"></canvas>
+  <div id="bg-layer"></div><canvas id="bg-canvas"></canvas>
+
   <header class="nav">
     <div class="container">
-      <div class="brand"><div class="logo-3d"><div class="gavel">⚖️</div></div>
-        <div><h1>مكتب المحامي محمد العتيبي</h1><p class="sub">نتائجنا العملية</p></div>
-      </div>
-      <nav class="links">
-        <a href="index.html">الرئيسية</a>
-        <a href="about.html">من نحن</a>
-        <a href="services.html">خدماتنا</a>
-        <a href="cases.html" class="active">قضايا سابقة</a>
-        <a href="contact.html" class="cta">تواصل معنا</a>
-      </nav>
+      <div class="brand"><div class="logo-3d">...</div><div><h1 class="site-title">مكتب المحامي محمد العتيبي</h1><p class="sub">نتائج مختارة</p></div></div>
+      <nav class="links" id="mainNav"><a href="index.html">الرئيسية</a><a href="about.html">من نحن</a><a href="services.html">خدماتنا</a><a href="cases.html" class="active">قضايا سابقة</a><a href="contact.html" class="cta">تواصل</a></nav>
+      <button id="hamburger" class="hamburger">...</button>
     </div>
   </header>
 
-  <main class="container main-content">
-    <h2>قضايا سابقة واختيارات من الملفات</h2>
-    <div class="case-list">
-      <section class="case-item">
-        <h3>استرداد ٢٠٠,٠٠٠$ — شركة وساطة دولية</h3>
-        <p>الوصف: تم رفع دعوى وتم استرداد جزء كبير بالتسوية بعد تحقيقات قانونية وإجراءات تحفظية.</p>
-      </section>
+  <button id="mobilePagesBtn" class="mobile-pages-btn">...</button>
+  <div id="mobilePagesOverlay" class="mobile-pages-overlay" aria-hidden="true">...</div>
 
-      <section class="case-item">
-        <h3>تسوية مع منصة تداول مرخّصة</h3>
-        <p>الوصف: تفاوض قضائي ونقاشات مع الجهات الرقابية أدت إلى حل ودي وتعويض.</p>
-      </section>
+  <main class="container main-content">
+    <h2>قضايا سابقة</h2>
+    <div class="case-list">
+      <div class="case-item">
+        <h3>استرداد لمبلغ كبير</h3>
+        <p class="muted">حالة استرجاع نتيجة تحقيقات وتنسيق قانوني.</p>
+      </div>
+
+      <div class="case-item">
+        <h3>تسوية مع منصة تداول</h3>
+        <p class="muted">تسوية أدت إلى استرداد جزء كبير من المبلغ.</p>
+      </div>
     </div>
   </main>
 
   <footer class="footer">
-    <div class="container">
-      <div><strong>مكتب المحامي محمد العتيبي</strong></div>
-      <div><small>© <span id="year4"></span> كل الحقوق محفوظة</small></div>
-    </div>
+    <div class="container"><div><strong>مكتب المحامي محمد العتيبي</strong></div><div class="muted">© <span id="year4"></span> كل الحقوق محفوظة</div></div>
   </footer>
 </body>
 </html>
