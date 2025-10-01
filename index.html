@@ -11,17 +11,24 @@
 
 <div id="particles-js"></div>
 
+<!-- الهيدر الجديد -->
 <header>
-  <div class="logo">مكتب المحامي <span>محمد العتيبي</span></div>
+  <div class="logo">
+    <a href="index.html">مكتب المحامي <span>محمد العتيبي</span></a>
+  </div>
+  <input type="checkbox" id="menu-toggle">
+  <label for="menu-toggle" class="menu-icon">&#9776;</label>
   <nav>
     <ul class="nav-links">
-      <li><a href="#home">الرئيسية</a></li>
+      <li><a href="index.html">الرئيسية</a></li>
       <li><a href="#about">من نحن</a></li>
       <li><a href="#services">خدماتنا</a></li>
       <li><a href="#success">قصص نجاح</a></li>
       <li><a href="#contact">تواصل معنا</a></li>
+      <li><a href="login.html">تسجيل الدخول</a></li>
+      <li><a href="register.html">تسجيل</a></li>
+      <li><a href="dashboard.html">لوحة التحكم</a></li>
     </ul>
-    <div class="menu-toggle" id="menu-toggle">☰</div>
   </nav>
 </header>
 
@@ -75,6 +82,78 @@
 <footer>
   <p>© 2025 مكتب المحامي محمد العتيبي - جميع الحقوق محفوظة</p>
 </footer>
+
+<!-- CSS داخلي للهيدر المتجاوب -->
+<style>
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #004080;
+    padding: 0 20px;
+    height: 60px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo a {
+    color: white;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  nav {
+    display: flex;
+    align-items: center;
+  }
+  .nav-links {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+  }
+  .nav-links li {
+    margin-left: 20px;
+  }
+  .nav-links a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+  }
+  .nav-links a:hover {
+    color: #ffcc00;
+  }
+  .menu-icon {
+    display: none;
+    font-size: 28px;
+    color: white;
+    cursor: pointer;
+  }
+  #menu-toggle {
+    display: none;
+  }
+  @media (max-width: 768px) {
+    .nav-links {
+      position: absolute;
+      top: 60px;
+      right: 0;
+      width: 100%;
+      background-color: #004080;
+      flex-direction: column;
+      display: none;
+    }
+    .nav-links li {
+      margin: 15px 0;
+      text-align: center;
+    }
+    #menu-toggle:checked + .menu-icon + nav .nav-links {
+      display: flex;
+    }
+    .menu-icon {
+      display: block;
+    }
+  }
+</style>
 
 <script src="script.js"></script>
 </body>
