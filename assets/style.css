@@ -70,11 +70,24 @@ nav ul li a:hover {
   display: none;
   font-size: 30px;
   cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.menu-toggle:hover {
+  transform: scale(1.1);
 }
 
+/* الأقسام */
 section {
   padding: 100px 20px;
   margin-top: 80px;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s ease;
+}
+
+section.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .glass {
@@ -90,6 +103,8 @@ section {
 h1, h2 {
   color: #f4c10f;
   margin-bottom: 15px;
+  text-align: center;
+  line-height: 1.4;
 }
 
 .hero-img, .section-img {
@@ -100,6 +115,7 @@ h1, h2 {
 
 ul {
   list-style: square inside;
+  padding: 0 20px;
 }
 
 form input, form textarea, form button {
@@ -109,6 +125,7 @@ form input, form textarea, form button {
   padding: 12px;
   border: none;
   border-radius: 10px;
+  font-size: 15px;
 }
 
 form button {
@@ -116,6 +133,11 @@ form button {
   color: #000;
   font-weight: bold;
   cursor: pointer;
+  transition: 0.3s;
+}
+
+form button:hover {
+  background: #ffd633;
 }
 
 /* اقتباسات */
@@ -124,6 +146,8 @@ form button {
   padding: 15px;
   border-radius: 12px;
   margin: 15px 0;
+  font-size: 16px;
+  line-height: 1.6;
 }
 
 .testimonials footer {
@@ -138,6 +162,8 @@ footer {
   background: rgba(255,255,255,0.05);
   backdrop-filter: blur(10px);
   margin-top: 50px;
+  font-size: 14px;
+  color: #ccc;
 }
 
 /* موبايل */
@@ -149,14 +175,29 @@ footer {
     position: absolute;
     top: 60px;
     right: 0;
-    width: 200px;
-    border-radius: 10px;
+    width: 220px;
+    border-radius: 12px;
     text-align: right;
-    padding: 15px;
+    padding: 20px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.5);
   }
 
   nav ul.active {
     display: flex;
+    animation: slideDown 0.5s ease forwards;
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  nav ul li {
+    margin: 12px 0;
+  }
+
+  nav ul li a {
+    font-size: 18px;
   }
 
   .menu-toggle {
@@ -165,5 +206,13 @@ footer {
 
   section {
     padding: 80px 15px;
+  }
+
+  h1, h2 {
+    font-size: 20px;
+  }
+
+  body {
+    font-size: 15px;
   }
 }
