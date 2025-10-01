@@ -1,0 +1,87 @@
+:root{
+  --bg:#070707;
+  --card:#0f0f0f;
+  --gold:#c9a43a;
+  --muted:#bdbdbd;
+  --glass: rgba(255,255,255,0.03);
+  --accent: rgba(201,164,58,0.12);
+  --container: 1100px;
+  font-family: "Segoe UI", Tahoma, system-ui, "Noto Naskh Arabic", "Almarai", sans-serif;
+}
+
+/* Reset & layout */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body.theme{
+  background:linear-gradient(180deg,#020202 0%, #0b0b0b 60%);
+  color:#eee;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* Canvas full-screen */
+#bg{
+  position:fixed; left:0; top:0; width:100%; height:100%; z-index:0;
+}
+
+/* Container */
+.container{max-width:var(--container); margin:0 auto; padding:28px; position:relative; z-index:2}
+
+/* Navigation */
+.nav{position:sticky; top:0; z-index:5; backdrop-filter: blur(6px); background:linear-gradient(180deg, rgba(0,0,0,0.38), rgba(0,0,0,0.08)); border-bottom:1px solid rgba(255,255,255,0.02)}
+.nav .container{display:flex; align-items:center; justify-content:space-between}
+.brand{display:flex; gap:12px; align-items:center}
+.logo-3d{width:54px;height:54px;border-radius:12px;background:linear-gradient(135deg,var(--card), #1b1b1b); display:flex; align-items:center; justify-content:center; transform:rotateX(18deg) rotateY(-10deg); box-shadow:0 6px 30px rgba(0,0,0,0.6), inset 0 -4px 18px rgba(255,255,255,0.02)}
+.logo-3d .gavel{font-size:22px}
+.brand h1{font-size:18px;margin-bottom:2px}
+.sub{font-size:12px;color:var(--muted)}
+
+/* Links */
+.links a{color:#ddd; text-decoration:none; margin-left:18px; font-size:15px}
+.links a.cta{padding:8px 12px;border-radius:8px;background:linear-gradient(90deg,var(--gold), #b58d2f); color:#080808; font-weight:700}
+.links a.active{color:var(--gold)}
+
+/* Hero */
+.hero{display:flex; gap:30px; align-items:center; padding:60px 0}
+.hero-left{flex:1}
+.hero-right{width:360px; display:flex; align-items:center; justify-content:center}
+
+/* 3D card */
+.card-3d{width:320px;height:420px; perspective:1200px}
+.card-face{width:100%;height:100%; border-radius:18px; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,0.7); transform-style:preserve-3d; transition:transform 0.8s cubic-bezier(.2,.9,.3,1)}
+.card-front{background:linear-gradient(180deg, rgba(20,20,20,0.9), rgba(12,12,12,0.85)); display:flex; flex-direction:column; align-items:center; padding:22px; gap:12px}
+.card-front img{width:100%; height:220px; object-fit:cover; border-radius:10px}
+.card-front h3{margin-top:6px}
+.card-back{position:absolute; top:0; left:0; transform:rotateY(180deg); background:linear-gradient(180deg, rgba(30,20,10,0.8), rgba(12,12,12,0.9)); padding:24px; display:flex; flex-direction:column; justify-content:center; align-items:center}
+
+/* on hover flip */
+.card-3d:hover .card-face{transform:rotateY(180deg)}
+
+/* Buttons */
+.btn{display:inline-block; padding:12px 18px; border-radius:10px; text-decoration:none; font-weight:600}
+.btn-gold{background:linear-gradient(90deg,var(--gold), #b68c2f); color:#070707}
+.btn-outline{border:1px solid rgba(255,255,255,0.06); color:#ddd; background:transparent}
+
+/* Highlights and grids */
+.highlights{list-style:none; margin-top:14px; color:var(--muted)}
+.services .grid, .case-cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px; margin-top:18px}
+.services article{background:var(--glass); padding:18px; border-radius:12px; border:1px solid rgba(255,255,255,0.03)}
+.center{text-align:center; margin-top:16px}
+
+/* Cases */
+.case-cards .case{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:16px; border-radius:12px}
+
+/* Contact form */
+.contact-form{max-width:720px; background:rgba(255,255,255,0.02); padding:18px; border-radius:12px}
+.contact-form label{display:block; font-size:13px; margin-top:12px}
+.contact-form input, .contact-form textarea{width:100%; padding:10px; margin-top:6px; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background:transparent; color:#fff}
+
+/* Footer */
+.footer{padding:24px 0; color:var(--muted); border-top:1px solid rgba(255,255,255,0.02)}
+
+/* responsive */
+@media (max-width:900px){
+  .hero{flex-direction:column; padding:30px 0}
+  .links{display:none}
+  .container{padding:18px}
+}
