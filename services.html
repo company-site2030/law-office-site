@@ -8,49 +8,61 @@
   <script defer src="assets/script.js"></script>
 </head>
 <body dir="rtl" class="theme">
-  <canvas id="bg"></canvas>
+  <div id="bg-layer"></div><canvas id="bg-canvas"></canvas>
+
   <header class="nav">
     <div class="container">
-      <div class="brand"><div class="logo-3d"><div class="gavel">⚖️</div></div>
-        <div><h1>مكتب المحامي محمد العتيبي</h1><p class="sub">استرجاع مبالغ الاستثمار</p></div>
-      </div>
-      <nav class="links">
-        <a href="index.html">الرئيسية</a>
-        <a href="about.html">من نحن</a>
-        <a href="services.html" class="active">خدماتنا</a>
-        <a href="cases.html">قضايا سابقة</a>
-        <a href="contact.html" class="cta">تواصل معنا</a>
-      </nav>
+      <div class="brand"><div class="logo-3d">...</div><div><h1 class="site-title">مكتب المحامي محمد العتيبي</h1><p class="sub">خدمات قانونية متخصصة</p></div></div>
+      <nav class="links" id="mainNav"><a href="index.html">الرئيسية</a><a href="about.html">من نحن</a><a href="services.html" class="active">خدماتنا</a><a href="cases.html">قضايا سابقة</a><a href="contact.html" class="cta">تواصل</a></nav>
+      <button id="hamburger" class="hamburger">...</button>
     </div>
   </header>
 
+  <button id="mobilePagesBtn" class="mobile-pages-btn">...</button>
+  <div id="mobilePagesOverlay" class="mobile-pages-overlay" aria-hidden="true">...</div>
+
   <main class="container main-content">
     <h2>خدماتنا</h2>
-    <div class="grid services-grid">
-      <article>
-        <h4>استرجاع الأموال من شركات الفوركس</h4>
-        <p>تحرّكات قانونية وإجراءات مدنية وجزائية لاستعادة أموال العملاء المتضررين من وسطاء فوركس.</p>
+    <div class="services-grid">
+      <article class="service">
+        <h4>استرجاع أموال الفوركس</h4>
+        <p class="muted">قضايا ضد وسطاء مرخّصين وغير مرخّصين ورفع دعاوى استرداد.</p>
       </article>
-      <article>
-        <h4>القضايا ضد منصات التداول الاحتيالية</h4>
-        <p>رفع دعاوى واستصدار أوامر تحفظية والتعاون مع جهات إنفاذ القانون.</p>
+
+      <article class="service">
+        <h4>قضايا منصات التداول الاحتيالية</h4>
+        <p class="muted">إجراءات تحفظية وتحقيقات ضد المنصات الاحتيالية.</p>
       </article>
-      <article>
-        <h4>التفاوض والتسويات</h4>
-        <p>تحقيق أقصى تعويض عبر التفاوض القانوني والتسويات}.</p>
+
+      <article class="service">
+        <h4>إجراءات تنفيذية دولية</h4>
+        <p class="muted">تنفيذ أحكام وتسويات عبر قنوات قانونية دولية.</p>
       </article>
-      <article>
-        <h4>التنسيق مع الجهات الرقابية</h4>
-        <p>التواصل مع هيئات الرقابة المالية والبنكية لفتح قنوات للضغط القانوني والعملي.</p>
+
+      <article class="service">
+        <h4>تحقيقات مالية جنائية</h4>
+        <p class="muted">تحليل معاملات وجمع أدلة لإثبات الاحتيال المالي.</p>
       </article>
+
+      <article class="service">
+        <h4>تفاوض واسترداد ودي</h4>
+        <p class="muted">التفاوض مع الجهات والحصول على تسويات تعوض العميل.</p>
+      </article>
+
+      <article class="service">
+        <h4>تنسيق مع جهات رقابية</h4>
+        <p class="muted">فتح قنوات مع هيئات رقابية لزيادة فرص الاسترداد.</p>
+      </article>
+    </div>
+
+    <div class="center">
+      <p class="muted">لقد استرجعنا مبالغ بملايين الريالات لعملائنا عبر إجراءات قضائية وتسويات فعّالة.</p>
+      <a href="contact.html" class="btn btn-primary">أرسل قضيتك</a>
     </div>
   </main>
 
   <footer class="footer">
-    <div class="container">
-      <div><strong>مكتب المحامي محمد العتيبي</strong></div>
-      <div><small>© <span id="year3"></span> كل الحقوق محفوظة</small></div>
-    </div>
+    <div class="container"><div><strong>مكتب المحامي محمد العتيبي</strong></div><div class="muted">© <span id="year3"></span> كل الحقوق محفوظة</div></div>
   </footer>
 </body>
 </html>
