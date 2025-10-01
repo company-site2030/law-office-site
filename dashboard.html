@@ -5,10 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>لوحة العميل - مكتب المحامي محمد العتيبي</title>
 <link rel="stylesheet" href="style.css">
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script>
 <script src="firebase.js"></script>
 </head>
 <body>
@@ -31,8 +27,7 @@ auth.onAuthStateChanged(user=>{
   if(!user) window.location.href='login.html';
   else{
     const uid = user.uid;
-    const docRef = db.collection('clients').doc(uid);
-    docRef.get().then(doc=>{
+    db.collection('clients').doc(uid).get().then(doc=>{
       if(doc.exists){
         const data = doc.data();
         document.getElementById('clientData').innerHTML = `
@@ -47,9 +42,7 @@ auth.onAuthStateChanged(user=>{
   }
 });
 
-// رفع المستندات
-const uploadBtn = document.getElementById('uploadBtn');
-uploadBtn.addEventListener('click',()=>{
+document.getElementById('uploadBtn').addEventListener('click',()=>{
   const file = document.getElementById('docInput').files[0];
   if(!file){ alert('اختر ملف'); return; }
   const uid = auth.currentUser.uid;
@@ -64,8 +57,10 @@ uploadBtn.addEventListener('click',()=>{
   });
 });
 
-// تسجيل خروج
-document.getElementById('logoutBtn').addEventListener('click',()=>{ auth.signOut(); window.location.href='login.html'; });
+document.getElementById('logoutBtn').addEventListener('click',()=>{
+  auth.signOut();
+  window.location.href='login.html';
+});
 </script>
 </body>
 </html>
