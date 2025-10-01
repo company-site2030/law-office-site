@@ -28,7 +28,7 @@ const errorMsg = document.getElementById('errorMsg');
 
 registerForm.addEventListener('submit', e => {
   e.preventDefault();
-  errorMsg.innerText = ''; // مسح رسالة الخطأ القديمة
+  errorMsg.innerText = '';
 
   const name = document.getElementById('name').value.trim();
   const idNumber = document.getElementById('idNumber').value.trim();
@@ -45,17 +45,12 @@ registerForm.addEventListener('submit', e => {
     .then(userCredential => {
       const uid = userCredential.user.uid;
       return db.collection('clients').doc(uid).set({
-        name,
-        idNumber,
-        amount,
-        email,
-        status: 'قيد الانتظار',
-        documents: []
+        name, idNumber, amount, email, status: 'قيد الانتظار', documents: []
       });
     })
     .then(() => {
-      registerForm.reset(); // مسح الحقول بعد التسجيل
-      window.location.href = 'dashboard.html'; // التوجيه للوحة العميل
+      registerForm.reset();
+      window.location.href = 'dashboard.html';
     })
     .catch(err => {
       errorMsg.innerText = err.message;
