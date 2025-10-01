@@ -8,48 +8,51 @@
   <script defer src="assets/script.js"></script>
 </head>
 <body dir="rtl" class="theme">
-  <canvas id="bg"></canvas>
+  <div id="bg-layer"></div><canvas id="bg-canvas"></canvas>
+
   <header class="nav">
     <div class="container">
       <div class="brand">
-        <div class="logo-3d"><div class="gavel">⚖️</div></div>
-        <div>
-          <h1>مكتب المحامي محمد العتيبي</h1>
-          <p class="sub">استرجاع مبالغ الاستثمار</p>
-        </div>
+        <div class="logo-3d" aria-hidden="true">...</div>
+        <div><h1 class="site-title">مكتب المحامي محمد العتيبي</h1><p class="sub">استرجاع مبالغ الاستثمار</p></div>
       </div>
-      <nav class="links">
-        <a href="index.html">الرئيسية</a>
-        <a href="about.html" class="active">من نحن</a>
-        <a href="services.html">خدماتنا</a>
-        <a href="cases.html">قضايا سابقة</a>
-        <a href="contact.html" class="cta">تواصل معنا</a>
-      </nav>
+      <nav class="links" id="mainNav"><a href="index.html">الرئيسية</a><a href="about.html" class="active">من نحن</a><a href="services.html">خدماتنا</a><a href="cases.html">قضايا سابقة</a><a href="contact.html" class="cta">تواصل</a></nav>
+      <button id="hamburger" class="hamburger" aria-label="قائمة">...</button>
     </div>
   </header>
 
+  <button id="mobilePagesBtn" class="mobile-pages-btn" title="الصفحات">...</button>
+  <div id="mobilePagesOverlay" class="mobile-pages-overlay" aria-hidden="true">
+    <div class="mobile-pages-panel"><button id="closeMobilePages" class="close-mobile">×</button>
+      <nav class="mobile-links">
+        <a href="index.html">الرئيسية</a>
+        <a href="about.html">من نحن</a>
+        <a href="services.html">خدماتنا</a>
+        <a href="cases.html">قضايا سابقة</a>
+        <a href="contact.html" class="cta">تواصل</a>
+      </nav>
+    </div>
+  </div>
+
   <main class="container main-content">
     <section class="about">
-      <h2>عن المكتب</h2>
-      <p>مكتب قانوني متخصص في استرجاع الأموال من منصات وشركات الاستثمار والفوركس. يضم فريقًا من المحامين والمستشارين الماليين ذوي الخبرة في القوانين المدنية والتجارية والمالية عبر السعودية والإمارات وأوروبا.</p>
+      <h2>من نحن</h2>
+      <p class="muted">مكتب قانوني متخصص باسترجاع أموال المستثمرين من منصات وشركات الاستثمار.</p>
+
+      <h3>فريقنا</h3>
+      <ul>
+        <li>محامون مختصون بالقضايا المالية والتجارية</li>
+        <li>مستشارون ماليون للتحقق من المعاملات</li>
+        <li>شبكة علاقات قانونية دولية</li>
+      </ul>
 
       <h3>رؤيتنا</h3>
-      <p>حماية حقوق المستثمرين وردع الشركات غير النزيهة عبر حلول قانونية فعّالة.</p>
-
-      <h3>فِرقنا</h3>
-      <ul>
-        <li>التحقيق المالي والجنائي التجاري</li>
-        <li>التقاضي والوساطة الدولية</li>
-        <li>التواصل مع الجهات الرقابية والبنوك</li>
-      </ul>
+      <p class="muted">حماية المستثمرين واستعادة الحقوق عبر حلول قانونية فعّالة.</p>
     </section>
   </main>
 
   <footer class="footer">
-    <div class="container">
-      <div><strong>مكتب المحامي محمد العتيبي</strong></div>
-      <div><small>© <span id="year2"></span> كل الحقوق محفوظة</small></div>
-    </div>
+    <div class="container"><div><strong>مكتب المحامي محمد العتيبي</strong></div><div class="muted">© <span id="year2"></span> كل الحقوق محفوظة</div></div>
   </footer>
 </body>
 </html>
