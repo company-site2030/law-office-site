@@ -5,69 +5,47 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>مكتب المحامي محمد العتيبي</title>
 <link rel="stylesheet" href="style.css">
-<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+<script src="firebase.js"></script>
 </head>
 <body>
-
-<div id="particles-js"></div>
-
-<!-- الهيدر الجديد -->
 <header>
-  <div class="logo">
-    <a href="index.html">مكتب المحامي <span>محمد العتيبي</span></a>
-  </div>
-  <input type="checkbox" id="menu-toggle">
-  <label for="menu-toggle" class="menu-icon">&#9776;</label>
+  <div class="logo">مكتب المحامي <span>محمد العتيبي</span></div>
   <nav>
     <ul class="nav-links">
-      <li><a href="index.html">الرئيسية</a></li>
+      <li><a href="#home">الرئيسية</a></li>
       <li><a href="#about">من نحن</a></li>
       <li><a href="#services">خدماتنا</a></li>
-      <li><a href="#success">قصص نجاح</a></li>
+      <li><a href="#cases">قصص نجاح</a></li>
       <li><a href="#contact">تواصل معنا</a></li>
       <li><a href="login.html">تسجيل الدخول</a></li>
       <li><a href="register.html">تسجيل</a></li>
-      <li><a href="dashboard.html">لوحة التحكم</a></li>
     </ul>
   </nav>
 </header>
 
 <section id="home" class="glass">
   <h1>مكتب المحامي محمد العتيبي</h1>
-  <p>متخصصون في استرجاع الأموال من شركات الفوركس المرخصة وغير المرخصة في السعودية، الإمارات، وأوروبا.</p>
-  <img src="images/court.jpg" alt="محكمة" class="hero-img">
+  <p>متخصصون في استرجاع الأموال من شركات الفوركس المرخصة وغير المرخصة.</p>
 </section>
 
 <section id="about" class="glass">
   <h2>من نحن</h2>
-  <p>نحن مكتب محاماة رائد بخبرة واسعة في قضايا الاستثمار المالي، ونسعى لاسترجاع حقوق العملاء من شركات الفوركس.</p>
+  <p>مكتب محاماة بخبرة واسعة في قضايا الاستثمار المالي.</p>
 </section>
 
 <section id="services" class="glass">
   <h2>خدماتنا</h2>
   <ul>
     <li>استرجاع الأموال من شركات الفوركس الوهمية.</li>
-    <li>الترافع أمام المحاكم المحلية والدولية.</li>
-    <li>التفاوض مع الشركات المرخصة لاسترداد الأموال.</li>
-    <li>استشارات قانونية متخصصة في الاستثمار المالي.</li>
+    <li>الترافع أمام المحاكم.</li>
+    <li>التفاوض لاسترداد الأموال.</li>
+    <li>استشارات قانونية متخصصة.</li>
   </ul>
-  <img src="images/lawyer.jpg" alt="محامي" class="section-img">
 </section>
 
-<section id="success" class="glass">
+<section id="cases" class="glass">
   <h2>قصص نجاح</h2>
-  <p>استرجعنا ملايين الريالات لعملائنا في السعودية، الإمارات وأوروبا من شركات وهمية ومرخصة.</p>
-  <div class="testimonials">
-    <blockquote>
-      "استعدت أموالي بالكامل بفضل مكتب المحامي محمد العتيبي."
-      <footer>- عميل سعودي</footer>
-    </blockquote>
-    <blockquote>
-      "خدماتهم القانونية دقيقة واحترافية."
-      <footer>- عميل إماراتي</footer>
-    </blockquote>
-  </div>
-  <img src="images/success.jpg" alt="نجاح" class="section-img">
+  <p>استرجعنا ملايين الريالات لعملائنا.</p>
 </section>
 
 <section id="contact" class="glass">
@@ -82,79 +60,5 @@
 <footer>
   <p>© 2025 مكتب المحامي محمد العتيبي - جميع الحقوق محفوظة</p>
 </footer>
-
-<!-- CSS داخلي للهيدر المتجاوب -->
-<style>
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #004080;
-    padding: 0 20px;
-    height: 60px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  .logo a {
-    color: white;
-    text-decoration: none;
-    font-size: 24px;
-    font-weight: bold;
-  }
-  nav {
-    display: flex;
-    align-items: center;
-  }
-  .nav-links {
-    list-style: none;
-    display: flex;
-    margin: 0;
-    padding: 0;
-  }
-  .nav-links li {
-    margin-left: 20px;
-  }
-  .nav-links a {
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-  }
-  .nav-links a:hover {
-    color: #ffcc00;
-  }
-  .menu-icon {
-    display: none;
-    font-size: 28px;
-    color: white;
-    cursor: pointer;
-  }
-  #menu-toggle {
-    display: none;
-  }
-  @media (max-width: 768px) {
-    .nav-links {
-      position: absolute;
-      top: 60px;
-      right: 0;
-      width: 100%;
-      background-color: #004080;
-      flex-direction: column;
-      display: none;
-    }
-    .nav-links li {
-      margin: 15px 0;
-      text-align: center;
-    }
-    #menu-toggle:checked + .menu-icon + nav .nav-links {
-      display: flex;
-    }
-    .menu-icon {
-      display: block;
-    }
-  }
-</style>
-
-<script src="script.js"></script>
 </body>
 </html>
