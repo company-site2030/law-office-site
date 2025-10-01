@@ -23,17 +23,12 @@
 </section>
 
 <script>
-  // التحقق من تسجيل الدخول
-  auth.onAuthStateChanged(user => {
-    if (!user) {
-      window.location.href = 'login.html';
-      return;
-    }
-
+auth.onAuthStateChanged(user => {
+  if (!user) window.location.href = 'login.html';
+  else {
     const uid = user.uid;
-    // جلب بيانات العميل
     db.collection('clients').doc(uid).get().then(doc => {
-      if (doc.exists) {
+      if(doc.exists){
         const data = doc.data();
         document.getElementById('clientData').innerHTML = `
           <p>الاسم: ${data.name || '-'}</p>
@@ -50,35 +45,33 @@
       console.error(err);
       document.getElementById('clientData').innerText = 'حدث خطأ أثناء تحميل البيانات.';
     });
-  });
+  }
+});
 
-  // رفع المستندات
-  document.getElementById('uploadBtn').addEventListener('click', () => {
-    const file = document.getElementById('docInput').files[0];
-    if (!file) { alert('اختر ملف'); return; }
+document.getElementById('uploadBtn').addEventListener('click', () => {
+  const file = document.getElementById('docInput').files[0];
+  if(!file){ alert('اختر ملف'); return; }
 
-    const uid = auth.currentUser.uid;
-    const storageRef = storage.ref(`documents/${uid}/${file.name}`);
-
-    storageRef.put(file).then(() => {
-      storageRef.getDownloadURL().then(url => {
-        db.collection('clients').doc(uid).update({
-          documents: firebase.firestore.FieldValue.arrayUnion(url)
-        });
-        alert('تم رفع المستند بنجاح!');
+  const uid = auth.currentUser.uid;
+  const storageRef = storage.ref(`documents/${uid}/${file.name}`);
+  storageRef.put(file).then(() => {
+    storageRef.getDownloadURL().then(url => {
+      db.collection('clients').doc(uid).update({
+        documents: firebase.firestore.FieldValue.arrayUnion(url)
       });
-    }).catch(err => {
-      console.error(err);
-      alert('حدث خطأ أثناء رفع الملف.');
+      alert('تم رفع المستند بنجاح!');
     });
+  }).catch(err => {
+    console.error(err);
+    alert('حدث خطأ أثناء رفع الملف.');
   });
+});
 
-  // تسجيل خروج
-  document.getElementById('logoutBtn').addEventListener('click', () => {
-    auth.signOut().then(() => {
-      window.location.href = 'login.html';
-    });
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  auth.signOut().then(() => {
+    window.location.href = 'login.html';
   });
+});
 </script>
 </body>
 </html>
