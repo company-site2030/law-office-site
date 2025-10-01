@@ -23,4 +23,55 @@
 </section>
 
 <script>
-auth.onAuthState
+auth.onAuthStateChanged(user => {
+  if (!user) window.location.href = 'login.html';
+  else {
+    const uid = user.uid;
+    db.collection('clients').doc(uid).get().then(doc => {
+      if(doc.exists){
+        const data = doc.data();
+        document.getElementById('clientData').innerHTML = `
+          <p>الاسم: ${data.name || '-'}</p>
+          <p>رقم الهوية: ${data.idNumber || '-'}</p>
+          <p>المبلغ المطلوب استرداده: ${data.amount || '-'}</p>
+          <p>البريد الإلكتروني: ${data.email || '-'}</p>
+        `;
+        document.getElementById('caseStatus').innerText = `حالة القضية: ${data.status || '-'}`;
+      } else {
+        document.getElementById('clientData').innerText = 'لا توجد بيانات متاحة.';
+        document.getElementById('caseStatus').innerText = '';
+      }
+    }).catch(err => {
+      console.error(err);
+      document.getElementById('clientData').innerText = 'حدث خطأ أثناء تحميل البيانات.';
+    });
+  }
+});
+
+document.getElementById('uploadBtn').addEventListener('click', () => {
+  const file = document.getElementById('docInput').files[0];
+  if(!file){ alert('اختر ملف'); return; }
+
+  const uid = auth.currentUser.uid;
+  const storageRef = storage.ref(`documents/${uid}/${file.name}`);
+  storageRef.put(file).then(() => {
+    storageRef.getDownloadURL().then(url => {
+      db.collection('clients').doc(uid).update({
+        documents: firebase.firestore.FieldValue.arrayUnion(url)
+      });
+      alert('تم رفع المستند بنجاح!');
+    });
+  }).catch(err => {
+    console.error(err);
+    alert('حدث خطأ أثناء رفع الملف.');
+  });
+});
+
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  auth.signOut().then(() => {
+    window.location.href = 'login.html';
+  });
+});
+</script>
+</body>
+</html>
