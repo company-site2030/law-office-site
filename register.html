@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>تسجيل حساب - مكتب المحامي محمد العتيبي</title>
+<title>تسجيل حساب جديد</title>
 <link rel="stylesheet" href="style.css">
 <script src="firebase.js"></script>
 </head>
@@ -29,7 +29,6 @@ const errorMsg = document.getElementById('errorMsg');
 registerForm.addEventListener('submit', e => {
   e.preventDefault();
   errorMsg.innerText = '';
-
   const name = document.getElementById('name').value.trim();
   const idNumber = document.getElementById('idNumber').value.trim();
   const amount = document.getElementById('amount').value.trim();
