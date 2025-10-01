@@ -1,185 +1,90 @@
-<!doctype html>
-<html lang="ar">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>مكتب المحامي محمد العتيبي — استرجاع مبالغ الاستثمار</title>
-  <meta name="description" content="مكتب المحامي محمد العتيبي — متخصصون في استرجاع المبالغ من شركات الاستثمار والفوركس."/>
-  <link rel="stylesheet" href="assets/style.css">
-  <script defer src="assets/script.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مكتب المحامي محمد العتيبي</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
 </head>
-<body dir="rtl" class="theme">
-  <!-- خلفية كانڤاس وطبقات -->
-  <div id="bg-layer"></div>
-  <canvas id="bg-canvas"></canvas>
+<body>
+  <!-- خلفية -->
+  <div id="particles-js"></div>
 
-  <!-- Header -->
-  <header class="nav">
-    <div class="container">
-      <div class="brand">
-        <!-- شعار SVG مضمن لضمان عدم فشل التحميل -->
-        <div class="logo-3d" aria-hidden="true">
-          <svg width="42" height="42" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <rect x="1" y="2" width="22" height="20" rx="5" fill="rgba(255,255,255,0.04)"></rect>
-            <path d="M6 16l6-10 6 10" stroke="#C79E3A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div>
-          <h1 class="site-title">مكتب المحامي محمد العتيبي</h1>
-          <p class="sub">استرجاع مبالغ الاستثمار — السعودية • الإمارات • أوروبا</p>
-        </div>
-      </div>
-
-      <nav class="links" id="mainNav">
-        <a href="index.html" class="active">الرئيسية</a>
-        <a href="about.html">من نحن</a>
-        <a href="services.html">خدماتنا</a>
-        <a href="cases.html">قضايا سابقة</a>
-        <a href="contact.html" class="cta">تواصل</a>
-      </nav>
-
-      <!-- أيقونة الهامبرغر للجوال -->
-      <button id="hamburger" class="hamburger" aria-label="قائمة">
-        <svg width="22" height="22" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
-      </button>
-    </div>
+  <!-- الهيدر -->
+  <header>
+    <div class="logo">مكتب المحامي <span>محمد العتيبي</span></div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#home">الرئيسية</a></li>
+        <li><a href="#about">من نحن</a></li>
+        <li><a href="#services">خدماتنا</a></li>
+        <li><a href="#success">قصص نجاح</a></li>
+        <li><a href="#contact">تواصل معنا</a></li>
+      </ul>
+      <div class="menu-toggle" id="menu-toggle">☰</div>
+    </nav>
   </header>
 
-  <!-- mobile pages floating button -->
-  <button id="mobilePagesBtn" class="mobile-pages-btn" title="الصفحات">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect x="3" y="3" width="8" height="8" rx="2" stroke="#fff" stroke-width="1.2"></rect>
-      <rect x="13" y="3" width="8" height="8" rx="2" stroke="#fff" stroke-width="1.2"></rect>
-      <rect x="3" y="13" width="8" height="8" rx="2" stroke="#fff" stroke-width="1.2"></rect>
-      <rect x="13" y="13" width="8" height="8" rx="2" stroke="#fff" stroke-width="1.2"></rect>
-    </svg>
-  </button>
+  <!-- الرئيسية -->
+  <section id="home" class="glass">
+    <h1>مكتب المحامي محمد العتيبي</h1>
+    <p>متخصصون في قضايا استرجاع المبالغ من شركات الفوركس المرخصة وغير المرخصة. نخدم عملاءنا في السعودية، الإمارات، وأوروبا.</p>
+    <img src="https://images.unsplash.com/photo-1589820296156-2454c1f01637" alt="محكمة" class="hero-img">
+  </section>
 
-  <!-- mobile pages overlay -->
-  <div id="mobilePagesOverlay" class="mobile-pages-overlay" aria-hidden="true">
-    <div class="mobile-pages-panel">
-      <button id="closeMobilePages" class="close-mobile">×</button>
-      <nav class="mobile-links">
-        <a href="index.html">الرئيسية</a>
-        <a href="about.html">من نحن</a>
-        <a href="services.html">خدماتنا</a>
-        <a href="cases.html">قضايا سابقة</a>
-        <a href="contact.html" class="cta">تواصل</a>
-      </nav>
+  <!-- من نحن -->
+  <section id="about" class="glass">
+    <h2>من نحن</h2>
+    <p>نحن مكتب محاماة رائد في قضايا الاستثمار المالي، بخبرة واسعة في مواجهة شركات الفوركس الوهمية والمرخصة على حد سواء. نسعى لتحقيق العدالة واسترجاع حقوق عملائنا.</p>
+    <p>عملنا يمتد من المملكة العربية السعودية والإمارات العربية المتحدة إلى العديد من الدول الأوروبية حيث واجهنا أعتى شركات الفوركس وتمكنا من إعادة ملايين الريالات لعملائنا.</p>
+  </section>
+
+  <!-- خدماتنا -->
+  <section id="services" class="glass">
+    <h2>خدماتنا</h2>
+    <ul>
+      <li>استرجاع الأموال من شركات الفوركس الوهمية.</li>
+      <li>الترافع أمام المحاكم المحلية والدولية.</li>
+      <li>التفاوض مع الشركات المرخصة لاسترداد المبالغ.</li>
+      <li>استشارات قانونية متخصصة في قضايا الاستثمار المالي.</li>
+    </ul>
+    <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216" alt="محامي" class="section-img">
+  </section>
+
+  <!-- قصص نجاح -->
+  <section id="success" class="glass">
+    <h2>قصص نجاح</h2>
+    <p>استرجعنا ملايين الريالات لعملائنا في السعودية والإمارات من شركات وهمية في قبرص ولتوانيا ودول أوروبية أخرى.</p>
+    <div class="testimonials">
+      <blockquote>
+        "بفضل مكتب المحامي محمد العتيبي تمكنت من استرجاع أموالي بعد أن خدعتني شركة فوركس وهمية في أوروبا."
+        <footer>- عميل سعودي</footer>
+      </blockquote>
+      <blockquote>
+        "خدماتهم مميزة واحترافية، لم أكن أتوقع أن أحصل على أموالي كاملة مرة أخرى!"
+        <footer>- عميل إماراتي</footer>
+      </blockquote>
     </div>
-  </div>
+    <img src="https://images.unsplash.com/photo-1528740561666-dc2479dc08ab" alt="نجاح" class="section-img">
+  </section>
 
-  <!-- Main -->
-  <main>
-    <section class="hero container">
-      <div class="hero-left">
-        <h2 class="hero-title">استرجعنا مبالغ بملايين الريالات لعملائنا</h2>
-        <p class="lead">فريق قانوني متخصص في استرجاع الأموال من شركات ومنصات الاستثمار والفوركس — إجراءات قانونية فعالة وسرعة في التنفيذ.</p>
-        <div class="hero-actions">
-          <a href="contact.html" class="btn btn-primary">أرسل قضيتك الآن</a>
-          <a href="services.html" class="btn btn-ghost">عرض الخدمات</a>
-        </div>
-        <ul class="quick-features">
-          <li>سعودية • الإمارات • أوروبا</li>
-          <li>إجراءات قضائية وتنفيذية</li>
-          <li>تحقيقات مالية متعمقة</li>
-        </ul>
-      </div>
+  <!-- تواصل معنا -->
+  <section id="contact" class="glass">
+    <h2>تواصل معنا</h2>
+    <p>يمكنك مراسلتنا عبر النموذج التالي:</p>
+    <form>
+      <input type="text" placeholder="اسمك" required>
+      <textarea placeholder="رسالتك" required></textarea>
+      <button type="submit">إرسال</button>
+    </form>
+  </section>
 
-      <div class="hero-right">
-        <!-- بطاقة 3D زجاجية مع SVG مضمون -->
-        <div class="card-3d">
-          <div class="card-inner">
-            <div class="card-front">
-              <!-- رسم توضيحي SVG كصورة محامي/رمز -->
-              <svg class="attorney-illustration" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="محامي">
-                <defs>
-                  <linearGradient id="g1" x1="0" x2="1">
-                    <stop offset="0" stop-color="#c9a43a" stop-opacity="0.95"/>
-                    <stop offset="1" stop-color="#b58d2f" stop-opacity="0.9"/>
-                  </linearGradient>
-                </defs>
-                <rect rx="18" width="200" height="200" fill="url(#g1)"></rect>
-                <g transform="translate(30,36)" fill="#fff">
-                  <circle cx="40" cy="30" r="20" fill="#fff" opacity="0.95"/>
-                  <rect x="10" y="66" width="60" height="18" rx="8" fill="#fff" opacity="0.9"/>
-                </g>
-              </svg>
-              <h3>المحامي محمد العتيبي</h3>
-              <p class="muted">خبير استرجاع أموال الاستثمار</p>
-            </div>
-            <div class="card-back">
-              <h4>نحن نستمع لقصتك</h4>
-              <p class="muted">أرسل ملخصًا في صفحة التواصل وسنزودك بالطريق القانوني المناسب.</p>
-              <a href="contact.html" class="btn btn-small">نموذج التواصل</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- خدمات سريعة -->
-    <section class="services-preview container">
-      <h3>خدماتنا المختصرة</h3>
-      <div class="grid">
-        <div class="card">
-          <h4>استرجاع أموال فوركس</h4>
-          <p>قضايا ضد وسطاء ومنصات تداول مرخّصة وغير مرخّصة.</p>
-        </div>
-        <div class="card">
-          <h4>تحقيقات مالية</h4>
-          <p>جمع أدلة مالية وتحليل معاملات مشبوهة.</p>
-        </div>
-        <div class="card">
-          <h4>تنفيذ دولي</h4>
-          <p>رفع دعاوى والعمل مع جهات إنفاذ عبر الحدود.</p>
-        </div>
-        <div class="card">
-          <h4>تفاوض وتسويات</h4>
-          <p>تحصيل تسويات تحفظ أكبر قدر من المال للعميل.</p>
-        </div>
-      </div>
-      <div class="center">
-        <a href="services.html" class="btn btn-outline">عرض جميع الخدمات</a>
-      </div>
-    </section>
-
-    <!-- ملفات مختصرة -->
-    <section class="cases-preview container">
-      <h3>نماذج نتائج</h3>
-      <div class="case-grid">
-        <div class="case-card">
-          <h4>استرداد لمبلغ كبير</h4>
-          <p class="muted">قضية ضد شركة وساطة ونتيجة بتسوية واسترداد مبلغ.</p>
-        </div>
-        <div class="case-card">
-          <h4>تسوية مع منصة</h4>
-          <p class="muted">حل ودي وحفظ حقوق العميل.</p>
-        </div>
-      </div>
-      <div class="center">
-        <a href="cases.html" class="btn btn-primary">عرض الملفات</a>
-      </div>
-    </section>
-
-    <!-- تهيئة للتواصل -->
-    <section class="contact-teaser container">
-      <div>
-        <h3>هل تحتاج مساعدة الآن؟</h3>
-        <p class="muted">أرسل لنا نبذة عن قضيتك من نموذج التواصل — محفوظ محليًا حتى تضبط الإرسال لاحقًا.</p>
-      </div>
-      <div>
-        <a href="contact.html" class="btn btn-primary">أرسل تفاصيل قضيتك</a>
-      </div>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div><strong>مكتب المحامي محمد العتيبي</strong></div>
-      <div class="muted">© <span id="year"></span> كل الحقوق محفوظة</div>
-    </div>
+  <!-- الفوتر -->
+  <footer>
+    <p>© 2025 مكتب المحامي محمد العتيبي - جميع الحقوق محفوظة</p>
   </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
