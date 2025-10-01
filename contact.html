@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ar">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>تواصل معنا — مكتب المحامي محمد العتيبي</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <script defer src="assets/script.js"></script>
+</head>
+<body dir="rtl" class="theme">
+  <canvas id="bg"></canvas>
+  <header class="nav">
+    <div class="container">
+      <div class="brand"><div class="logo-3d"><div class="gavel">⚖️</div></div>
+        <div><h1>مكتب المحامي محمد العتيبي</h1><p class="sub">تواصل معنا</p></div>
+      </div>
+      <nav class="links">
+        <a href="index.html">الرئيسية</a>
+        <a href="about.html">من نحن</a>
+        <a href="services.html">خدماتنا</a>
+        <a href="cases.html">قضايا سابقة</a>
+        <a href="contact.html" class="active cta">تواصل معنا</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container main-content">
+    <h2>أرسل تفاصيل قضيتك</h2>
+    <p>وصف مختصر عن حالتك (متى حدث، اسم الشركة، المبلغ، أي مراسلات):</p>
+
+    <!-- Note: GitHub Pages لا يدعم back-end — نستخدم mailto أو خدمات forms خارجية -->
+    <form class="contact-form" action="mailto:info@alotaibi-law.com" method="post" enctype="text/plain">
+      <label>الاسم</label>
+      <input type="text" name="name" required>
+      <label>البريد الإلكتروني</label>
+      <input type="email" name="email" required>
+      <label>الهاتف</label>
+      <input type="text" name="phone">
+      <label>تفاصيل القضية</label>
+      <textarea name="message" rows="6" required></textarea>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-gold">أرسل</button>
+        <a href="mailto:info@alotaibi-law.com" class="btn btn-outline">أو أرسل عبر البريد</a>
+      </div>
+    </form>
+
+    <section class="offices">
+      <h3>فروعنا</h3>
+      <ul>
+        <li>المملكة العربية السعودية</li>
+        <li>الإمارات العربية المتحدة</li>
+        <li>فروع في أوروبا</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div><strong>مكتب المحامي محمد العتيبي</strong></div>
+      <div><small>© <span id="year5"></span> كل الحقوق محفوظة</small></div>
+    </div>
+  </footer>
+</body>
+</html>
