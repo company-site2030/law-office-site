@@ -68,10 +68,15 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 const storage = firebase.storage();
 
-// قائمة الهاتف
+// قائمة الهاتف تعمل على الجوال والكمبيوتر
 const menuToggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.nav');
-menuToggle.addEventListener('click', () => nav.classList.toggle('show-nav'));
+function toggleNav(e) {
+  e.preventDefault();
+  nav.classList.toggle('show-nav');
+}
+menuToggle.addEventListener('click', toggleNav);
+menuToggle.addEventListener('touchstart', toggleNav);
 
 // التحقق من تسجيل الدخول وجلب بيانات العميل
 auth.onAuthStateChanged(async user => {
