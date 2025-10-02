@@ -26,15 +26,21 @@ a{color:var(--accent);text-decoration:none}
   transform-style:preserve-3d; border: 1px solid rgba(255,255,255,0.06);
 }
 .logo{font-weight:700;font-size:20px;display:flex;align-items:center;gap:8px}
-.logo .lawyer-name{font-size:16px;color:var(--accent);font-weight:700}
+.logo .lawyer-name{font-size:14px;color:var(--accent);font-weight:700}
 
 /* Navigation */
 .nav{
   display:flex;gap:14px;align-items:center;
 }
-.nav a{padding:8px 12px;border-radius:12px;color:var(--text);font-weight:600}
-.nav a:hover{background: rgba(255,255,255,0.03)}
-.menu-toggle{display:none}
+.nav a{
+  padding:8px 12px;
+  border-radius:12px;
+  color:var(--text);
+  font-weight:600;
+  font-size:16px;
+}
+.nav a:hover{background: rgba(255,255,255,0.1)}
+.menu-toggle{display:none;cursor:pointer}
 
 /* hero */
 .hero{
@@ -82,14 +88,11 @@ form button{background:linear-gradient(90deg,var(--accent),#5dc1ff);color:#04203
   .container{padding:14px}
   .hero{flex-direction:column;padding-top:100px}
   .hero h1{font-size:32px}
-  .nav{display:none}
+  
+  .nav{display:none;flex-direction:column;gap:10px;background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));padding:12px;border-radius:12px;box-shadow:0 8px 30px rgba(2,6,23,0.6);backdrop-filter: blur(12px);}
+  .header.show-nav .nav{display:flex}
   .menu-toggle{display:block;color:var(--text);font-size:28px;cursor:pointer}
   
-  /* قائمة الجوال الزجاجية */
-  .header.show-nav .nav{
-    display:flex;position:absolute;left:14px;right:14px;top:72px;flex-direction:column;
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    padding:12px;border-radius:12px;gap:8px;
-    box-shadow:0 8px 30px rgba(2,6,23,0.6);
-  }
+  .nav a{font-size:16px;color:var(--text);padding:10px 14px}
+  .nav a:hover{background: rgba(255,255,255,0.1)}
 }
