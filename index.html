@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="header container">
-  <div class="logo">مكتب المحامي <span>محمد العتيبي</span></div>
+  <div class="logo">⚖️ مكتب المحامي <span class="lawyer-name">محمد العتيبي</span></div>
   <div class="nav">
     <a href="#home">الرئيسية</a>
     <a href="#about">من نحن</a>
@@ -55,6 +55,24 @@
   <section id="cases" class="glass">
     <h2>قصص نجاح</h2>
     <p>حالات استرداد ناجحة لعملائنا في السعودية والإمارات وأوروبا.</p>
+    <div class="cases-grid">
+      <div class="case-card glass">
+        <img src="images/success1.jpg" alt="قصة نجاح 1">
+        <p>استرجاع كامل لمبلغ مستثمر في شركة وهمية.</p>
+      </div>
+      <div class="case-card glass">
+        <img src="images/success2.jpg" alt="قصة نجاح 2">
+        <p>تسوية قانونية ناجحة ضد مؤسسة مالية.</p>
+      </div>
+      <div class="case-card glass">
+        <img src="images/success3.jpg" alt="قصة نجاح 3">
+        <p>استرداد أموال من عمليات احتيالية عبر الإنترنت.</p>
+      </div>
+      <div class="case-card glass">
+        <img src="images/success4.jpg" alt="قصة نجاح 4">
+        <p>تمثيل قانوني ناجح أمام محاكم تجارية.</p>
+      </div>
+    </div>
   </section>
 
   <section id="contact" class="glass">
@@ -67,7 +85,19 @@
   </section>
 </main>
 
-<footer class="container" style="text-align:center;padding:24px 0;color:rgba(255,255,255,0.6)">© 2025 مكتب المحامي محمد العتيبي</footer>
+<footer class="container" style="text-align:center;padding:24px 0;color:rgba(255,255,255,0.6)">
+  © 2025 مكتب المحامي محمد العتيبي
+</footer>
+
 <script src="script.js"></script>
+<script>
+// قائمة الجوال
+const menuToggle = document.querySelector('.menu-toggle');
+const nav = document.querySelector('.nav');
+
+menuToggle.addEventListener('click', () => {
+  nav.classList.toggle('active');
+});
+</script>
 </body>
 </html>
