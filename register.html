@@ -5,9 +5,34 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>تسجيل حساب</title>
 <link rel="stylesheet" href="style.css">
-<script src="firebase.js"></script>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script>
+
+<script>
+  // تكوين Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyAzH6gqMdbxKhoZwkWwfJuuopElNRU2JsU",
+    authDomain: "alotebi-3500c.firebaseapp.com",
+    projectId: "alotebi-3500c",
+    storageBucket: "alotebi-3500c.appspot.com",
+    messagingSenderId: "99457641243",
+    appId: "1:99457641243:web:b9e86295f64e4f652b81be",
+    measurementId: "G-HQF5V5FY2L"
+  };
+
+  // تهيئة Firebase
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+  const storage = firebase.storage();
+</script>
 </head>
 <body>
+
 <div class="header container">
   <div class="logo">⚖️ <span class="lawyer-name">مكتب المحامي محمد العتيبي</span></div>
   <div class="nav">
@@ -43,45 +68,52 @@
 </footer>
 
 <script>
-const menuToggle = document.querySelector('.menu-toggle');
-const nav = document.querySelector('.nav');
-menuToggle.addEventListener('click', () => nav.classList.toggle('show-nav'));
+  // قائمة الهاتف
+  const menuToggle = document.querySelector('.menu-toggle');
+  const nav = document.querySelector('.nav');
+  menuToggle.addEventListener('click', () => nav.classList.toggle('show-nav'));
 
-const registerForm = document.getElementById('registerForm');
-const errorMsg = document.getElementById('errorMsg');
+  // تسجيل مستخدم
+  const registerForm = document.getElementById('registerForm');
+  const errorMsg = document.getElementById('errorMsg');
 
-registerForm.addEventListener('submit', async e => {
-  e.preventDefault();
-  errorMsg.innerText = '';
+  registerForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    errorMsg.innerText = '';
 
-  const name = document.getElementById('name').value.trim();
-  const idNumber = document.getElementById('idNumber').value.trim();
-  const amount = document.getElementById('amount').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const password = document.getElementById('password').value.trim();
+    const name = document.getElementById('name').value.trim();
+    const idNumber = document.getElementById('idNumber').value.trim();
+    const amount = document.getElementById('amount').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
 
-  if (!name || !idNumber || !amount || !email || !password) {
-    errorMsg.innerText = 'يرجى ملء جميع الحقول';
-    return;
-  }
+    if (!name || !idNumber || !amount || !email || !password) {
+      errorMsg.innerText = 'يرجى ملء جميع الحقول';
+      return;
+    }
 
-  try {
-    const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-    const uid = userCredential.user.uid;
+    try {
+      const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+      const uid = userCredential.user.uid;
 
-    await db.collection('clients').doc(uid).set({
-      name, idNumber, amount, email,
-      status: 'قيد الانتظار',
-      documents: []
-    });
+      // تخزين بيانات المستخدم في Firestore
+      await db.collection('clients').doc(uid).set({
+        name,
+        idNumber,
+        amount,
+        email,
+        status: 'قيد الانتظار',
+        documents: []
+      });
 
-    registerForm.reset();
-    window.location.href = 'dashboard.html';
-  } catch(err) {
-    console.error(err);
-    errorMsg.innerText = 'حدث خطأ أثناء التسجيل، حاول مرة أخرى';
-  }
-});
+      registerForm.reset();
+      window.location.href = 'dashboard.html'; // تحويل بعد التسجيل
+    } catch(err) {
+      console.error(err);
+      errorMsg.innerText = err.message; // رسالة الخطأ الفعلية من Firebase
+    }
+  });
 </script>
+
 </body>
 </html>
