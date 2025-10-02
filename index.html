@@ -6,7 +6,6 @@
   <title>مكتب المحامي محمد العتيبي</title>
   <link rel="stylesheet" href="style.css">
 
-  <!-- Open Graph لمعاينة الرابط عند الإرسال -->
   <meta property="og:title" content="مكتب المحامي محمد العتيبي">
   <meta property="og:description" content="خبرة قانونية في استرجاع الأموال من شركات الفوركس وتمثيل العملاء محلياً ودولياً.">
   <meta property="og:image" content="https://images.pexels.com/photos/5668486/pexels-photo-5668486.jpeg?auto=compress&cs=tinysrgb&w=1200">
@@ -18,7 +17,7 @@
   <div class="header container">
     <div class="logo">⚖️ <span class="lawyer-name">مكتب المحامي محمد العتيبي</span></div>
     <div class="nav">
-      <a href="index.html">الرئيسية</a>
+      <a href="index.html" class="active">الرئيسية</a>
       <a href="about.html">من نحن</a>
       <a href="services.html">خدماتنا</a>
       <a href="cases.html">قصص نجاح</a>
@@ -104,32 +103,21 @@
   <!-- أيقونة المحامي الثابتة -->
   <a href="contact.html" class="lawyer-icon" title="اطلب استشارة">⚖️</a>
 
-  <!-- سكربت قائمة الجوال واصلاح 3 خطوط -->
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
+  <!-- سكربت قائمة الجوال (ثلاث خطوط تعمل بشكل مضمون) -->
+  <script>
     const menuToggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('.nav');
 
-    function toggleNav(e) {
-      e.stopPropagation();
+    menuToggle.addEventListener('click', function() {
       nav.classList.toggle('show-nav');
-    }
+    });
 
-    menuToggle.addEventListener('click', toggleNav);
-    menuToggle.addEventListener('touchstart', toggleNav);
-
-    // اغلاق القائمة عند الضغط في أي مكان خارجها
+    // إغلاق القائمة عند الضغط خارجها
     document.addEventListener('click', function(e) {
-      if (!nav.contains(e.target) && !menuToggle.contains(e.target)) {
+      if(!nav.contains(e.target) && !menuToggle.contains(e.target)) {
         nav.classList.remove('show-nav');
       }
     });
-
-    // اغلاق القائمة عند تمرير الصفحة (اختياري لتحسين تجربة الجوال)
-    window.addEventListener('scroll', function() {
-      nav.classList.remove('show-nav');
-    });
-  });
-</script>
+  </script>
 </body>
 </html>
