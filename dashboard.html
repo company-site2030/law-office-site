@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="header container">
-  <div class="logo">مكتب المحامي <span>محمد العتيبي</span></div>
+  <div class="logo">⚖️ <span class="lawyer-name">مكتب المحامي محمد العتيبي</span></div>
   <div class="menu-toggle">☰</div>
 </div>
 
@@ -30,12 +30,18 @@
 </main>
 
 <script>
-auth.onAuthStateChanged(user=>{
-  if(!user) window.location.href='login.html';
-  else{
+const menuToggle = document.querySelector('.menu-toggle');
+const nav = document.querySelector('.nav');
+menuToggle.addEventListener('click', () => nav.classList.toggle('show-nav'));
+
+// التأكد من تسجيل الدخول
+auth.onAuthStateChanged(user => {
+  if (!user) {
+    window.location.href = 'login.html';
+  } else {
     const uid = user.uid;
-    db.collection('clients').doc(uid).get().then(doc=>{
-      if(doc.exists){
+    db.collection('clients').doc(uid).get().then(doc => {
+      if (doc.exists) {
         const data = doc.data();
         document.getElementById('clientData').innerHTML = `
           <p>الاسم: ${data.name || '-'}</p>
@@ -48,29 +54,41 @@ auth.onAuthStateChanged(user=>{
         document.getElementById('clientData').innerText = 'لا توجد بيانات متاحة.';
         document.getElementById('caseStatus').innerText = '';
       }
-    }).catch(err=>{
+    }).catch(err => {
+      console.error(err);
       document.getElementById('clientData').innerText = 'حدث خطأ أثناء تحميل البيانات.';
     });
   }
 });
 
-document.getElementById('uploadBtn').addEventListener('click', ()=>{
+// رفع المستندات
+document.getElementById('uploadBtn').addEventListener('click', async () => {
   const file = document.getElementById('docInput').files[0];
-  if(!file){ alert('اختر ملف'); return; }
+  if (!file) {
+    alert('اختر ملف');
+    return;
+  }
+
   const uid = auth.currentUser.uid;
   const storageRef = storage.ref(`documents/${uid}/${file.name}`);
-  storageRef.put(file).then(()=>{
-    storageRef.getDownloadURL().then(url=>{
-      db.collection('clients').doc(uid).update({
-        documents: firebase.firestore.FieldValue.arrayUnion(url)
-      });
-      alert('تم رفع المستند بنجاح!');
+
+  try {
+    await storageRef.put(file);
+    const url = await storageRef.getDownloadURL();
+    await db.collection('clients').doc(uid).update({
+      documents: firebase.firestore.FieldValue.arrayUnion(url)
     });
-  }).catch(()=>{ alert('حدث خطأ أثناء رفع الملف.'); });
+    alert('تم رفع المستند بنجاح!');
+  } catch(err) {
+    console.error(err);
+    alert('حدث خطأ أثناء رفع الملف.');
+  }
 });
 
-document.getElementById('logoutBtn').addEventListener('click', ()=>{
-  auth.signOut().then(()=>{ window.location.href='login.html'; });
+// تسجيل الخروج
+document.getElementById('logoutBtn').addEventListener('click', async () => {
+  await auth.signOut();
+  window.location.href = 'login.html';
 });
 </script>
 </body>
