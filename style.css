@@ -89,9 +89,24 @@ form button{background:linear-gradient(90deg,var(--accent),#5dc1ff);color:#04203
   .hero{flex-direction:column;padding-top:100px}
   .hero h1{font-size:32px}
   
-  .nav{display:none;flex-direction:column;gap:10px;background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));padding:12px;border-radius:12px;box-shadow:0 8px 30px rgba(2,6,23,0.6);backdrop-filter: blur(12px);}
+  /* تعديل الهيدر للجوال */
+  .nav{
+    display:none;
+    flex-direction:column;
+    gap:10px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+    padding:12px;
+    border-radius:12px;
+    box-shadow:0 8px 30px rgba(2,6,23,0.6);
+    backdrop-filter: blur(12px);
+  }
   .header.show-nav .nav{display:flex}
-  .menu-toggle{display:block;color:var(--text);font-size:28px;cursor:pointer}
+  .menu-toggle{
+    display:block;
+    color:var(--text);
+    font-size:28px;
+    cursor:pointer;
+  }
   
   .nav a{font-size:16px;color:var(--text);padding:10px 14px}
   .nav a:hover{background: rgba(255,255,255,0.1)}
