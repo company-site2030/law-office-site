@@ -43,6 +43,43 @@
 </footer>
 
 <script>
+// قائمة الجوال الزجاجية
 const menuToggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.nav');
-menuToggle.addEventListener('click', ()
+menuToggle.addEventListener('click', () => nav.classList.toggle('show-nav'));
+
+// تسجيل حساب جديد مع Firebase
+const registerForm = document.getElementById('registerForm');
+const errorMsg = document.getElementById('errorMsg');
+
+registerForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  errorMsg.innerText = '';
+
+  const name = document.getElementById('name').value.trim();
+  const idNumber = document.getElementById('idNumber').value.trim();
+  const amount = document.getElementById('amount').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value.trim();
+
+  if (!name || !idNumber || !amount || !email || !password) {
+    errorMsg.innerText = 'يرجى ملء جميع الحقول';
+    return;
+  }
+
+  try {
+    const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+    const uid = userCredential.user.uid;
+    await db.collection('clients').doc(uid).set({
+      name, idNumber, amount, email, status: 'قيد الانتظار', documents: []
+    });
+    registerForm.reset();
+    window.location.href = 'dashboard.html';
+  } catch (err) {
+    console.error(err);
+    errorMsg.innerText = 'حدث خطأ أثناء التسجيل، حاول مرة أخرى';
+  }
+});
+</script>
+</body>
+</html>
