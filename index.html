@@ -6,68 +6,27 @@
   <title>مكتب المحامي محمد العتيبي</title>
   <link rel="stylesheet" href="style.css">
 
-  <!-- Open Graph -->
+  <!-- Open Graph لمعاينة الرابط عند الإرسال -->
   <meta property="og:title" content="مكتب المحامي محمد العتيبي">
   <meta property="og:description" content="خبرة قانونية في استرجاع الأموال من شركات الفوركس وتمثيل العملاء محلياً ودولياً.">
   <meta property="og:image" content="https://images.pexels.com/photos/5668486/pexels-photo-5668486.jpeg?auto=compress&cs=tinysrgb&w=1200">
   <meta property="og:url" content="https://example.com">
   <meta property="og:type" content="website">
-  
-  <style>
-    /* عرض أزرار الجوال أعلى الصفحة */
-    @media(max-width:768px){
-      .mobile-top-buttons {
-        display:flex;
-        justify-content:flex-end;
-        gap:12px;
-        padding:12px;
-      }
-      .mobile-top-buttons a {
-        background:#001f3f;
-        color:white;
-        padding:8px 16px;
-        border-radius:8px;
-        text-decoration:none;
-        font-weight:bold;
-      }
-
-      /* روابط الصفحات أسفل الصفحة */
-      .mobile-bottom-nav {
-        display:flex;
-        justify-content:space-around;
-        position:fixed;
-        bottom:0;
-        left:0;
-        right:0;
-        background:rgba(0,31,63,0.95);
-        padding:8px 0;
-        z-index:9999;
-      }
-      .mobile-bottom-nav a {
-        color:white;
-        text-decoration:none;
-        font-weight:bold;
-      }
-    }
-  </style>
 </head>
 <body>
-  <!-- أزرار الجوال أعلى الصفحة -->
-  <div class="mobile-top-buttons">
-    <a href="login.html">تسجيل الدخول</a>
-    <a href="register.html">تسجيل</a>
-  </div>
-
   <!-- الهيدر -->
   <div class="header container">
     <div class="logo">⚖️ <span class="lawyer-name">مكتب المحامي محمد العتيبي</span></div>
     <div class="nav">
-      <a href="index.html" class="active">الرئيسية</a>
+      <a href="index.html">الرئيسية</a>
       <a href="about.html">من نحن</a>
       <a href="services.html">خدماتنا</a>
       <a href="cases.html">قصص نجاح</a>
       <a href="contact.html">تواصل</a>
+      <a href="login.html">تسجيل الدخول</a>
+      <a href="register.html">تسجيل</a>
     </div>
+    <div class="menu-toggle">☰</div>
   </div>
 
   <!-- المحتوى الرئيسي -->
@@ -145,13 +104,32 @@
   <!-- أيقونة المحامي الثابتة -->
   <a href="contact.html" class="lawyer-icon" title="اطلب استشارة">⚖️</a>
 
-  <!-- روابط الصفحات أسفل الجوال -->
-  <div class="mobile-bottom-nav">
-    <a href="index.html">الرئيسية</a>
-    <a href="about.html">من نحن</a>
-    <a href="services.html">خدماتنا</a>
-    <a href="cases.html">قصص نجاح</a>
-    <a href="contact.html">تواصل</a>
-  </div>
+  <!-- سكربت قائمة الجوال واصلاح 3 خطوط -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.nav');
+
+    function toggleNav(e) {
+      e.stopPropagation();
+      nav.classList.toggle('show-nav');
+    }
+
+    menuToggle.addEventListener('click', toggleNav);
+    menuToggle.addEventListener('touchstart', toggleNav);
+
+    // اغلاق القائمة عند الضغط في أي مكان خارجها
+    document.addEventListener('click', function(e) {
+      if (!nav.contains(e.target) && !menuToggle.contains(e.target)) {
+        nav.classList.remove('show-nav');
+      }
+    });
+
+    // اغلاق القائمة عند تمرير الصفحة (اختياري لتحسين تجربة الجوال)
+    window.addEventListener('scroll', function() {
+      nav.classList.remove('show-nav');
+    });
+  });
+</script>
 </body>
 </html>
