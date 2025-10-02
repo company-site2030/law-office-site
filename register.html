@@ -9,9 +9,14 @@
   <!-- Open Graph -->
   <meta property="og:title" content="تسجيل - مكتب المحامي محمد العتيبي">
   <meta property="og:description" content="قم بإنشاء حساب جديد للوصول إلى خدمات مكتب المحامي محمد العتيبي بسهولة.">
-  <meta property="og:image" content="https://via.placeholder.com/1200x630.png?text=⚖️+تسجيل">
+  <meta property="og:image" content="https://images.pexels.com/photos/5668486/pexels-photo-5668486.jpeg?auto=compress&cs=tinysrgb&w=1200">
   <meta property="og:url" content="https://example.com/register.html">
   <meta property="og:type" content="website">
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
 </head>
 <body>
   <!-- الهيدر -->
@@ -33,15 +38,16 @@
   <main class="container">
     <section class="glass" style="max-width:500px;margin:auto;margin-top:40px;padding:20px;">
       <h2 style="text-align:center;">إنشاء حساب جديد</h2>
-      <form>
-        <input type="text" placeholder="اسم العميل" required>
-        <input type="text" placeholder="المبلغ المطلوب استرجاعه" required>
-        <input type="text" placeholder="رقم الهوية" required>
-        <input type="tel" placeholder="رقم الهاتف" required>
-        <input type="email" placeholder="البريد الإلكتروني" required>
-        <input type="password" placeholder="كلمة المرور" required>
+      <form id="registerForm">
+        <input type="text" id="name" placeholder="اسم العميل" required>
+        <input type="text" id="amount" placeholder="المبلغ المطلوب استرجاعه" required>
+        <input type="text" id="idNumber" placeholder="رقم الهوية" required>
+        <input type="tel" id="phone" placeholder="رقم الهاتف" required>
+        <input type="email" id="email" placeholder="البريد الإلكتروني" required>
+        <input type="password" id="password" placeholder="كلمة المرور" required>
         <button type="submit">تسجيل</button>
       </form>
+      <p id="registerMsg" style="color:red;text-align:center;margin-top:10px;"></p>
       <p style="text-align:center;margin-top:10px;">
         لديك حساب بالفعل؟ <a href="login.html">تسجيل الدخول</a>
       </p>
@@ -57,17 +63,65 @@
   <a href="contact.html" class="lawyer-icon" title="اطلب استشارة">⚖️</a>
 
   <script>
-    // الهيدر 3 خطوط للجوال تعمل على كل الصفحات
+    // Firebase Config
+    const firebaseConfig = {
+      apiKey: "AIzaSyAzH6gqMdbxKhoZwkWwfJuuopElNRU2JsU",
+      authDomain: "alotebi-3500c.firebaseapp.com",
+      projectId: "alotebi-3500c"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // الهيدر 3 خطوط للجوال
     const menuToggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('.nav');
 
-    function toggleNav(e){
-      e.preventDefault();
+    menuToggle.addEventListener('click', function(e){
+      e.stopPropagation();
       nav.classList.toggle('show-nav');
-    }
+    });
+    document.addEventListener('click', function(e){
+      if(!nav.contains(e.target) && !menuToggle.contains(e.target)){
+        nav.classList.remove('show-nav');
+      }
+    });
 
-    menuToggle.addEventListener('click', toggleNav);
-    menuToggle.addEventListener('touchstart', toggleNav);
+    // تسجيل حساب جديد
+    const registerForm = document.getElementById('registerForm');
+    const registerMsg = document.getElementById('registerMsg');
+
+    registerForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      registerMsg.textContent = '';
+
+      const name = document.getElementById('name').value;
+      const amount = document.getElementById('amount').value;
+      const idNumber = document.getElementById('idNumber').value;
+      const phone = document.getElementById('phone').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        // إنشاء مستخدم Firebase Auth
+        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+        const user = userCredential.user;
+
+        // حفظ بيانات إضافية في Firestore
+        await db.collection('clients').doc(user.uid).set({
+          name,
+          amount,
+          idNumber,
+          phone,
+          email,
+          status: "جديد"
+        });
+
+        window.location.href = 'dashboard.html';
+      } catch (error) {
+        registerMsg.textContent = error.message;
+      }
+    });
   </script>
 </body>
 </html>
