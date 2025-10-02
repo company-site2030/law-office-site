@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="header container">
-  <div class="logo">⚖️ مكتب المحامي <span class="lawyer-name">محمد العتيبي</span></div>
+  <div class="logo">⚖️ <span class="lawyer-name">مكتب المحامي محمد العتيبي</span></div>
   <div class="nav">
     <a href="index.html#home">الرئيسية</a>
     <a href="index.html#about">من نحن</a>
@@ -38,12 +38,16 @@
   </section>
 </main>
 
+<footer class="container" style="text-align:center;padding:24px 0;color:rgba(255,255,255,0.6)">
+  © 2025 مكتب المحامي محمد العتيبي
+</footer>
+
 <script>
-// قائمة الجوال
+// قائمة الجوال الزجاجية
 const menuToggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.nav');
 menuToggle.addEventListener('click', () => {
-  nav.classList.toggle('active');
+  nav.classList.toggle('show-nav'); // مطابق لـ style.css
 });
 
 // تسجيل حساب جديد مع Firebase
@@ -79,7 +83,7 @@ registerForm.addEventListener('submit', e => {
     })
     .catch(err => {
       console.error('خطأ عند التسجيل:', err);
-      errorMsg.innerText = err.message;
+      errorMsg.innerText = 'حدث خطأ أثناء التسجيل، حاول مرة أخرى';
       registerForm.reset();
     });
 });
