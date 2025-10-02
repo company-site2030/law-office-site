@@ -100,7 +100,12 @@ form button{background:linear-gradient(90deg,var(--accent),#5dc1ff);color:#04203
     box-shadow:0 8px 30px rgba(2,6,23,0.6);
     backdrop-filter: blur(12px);
   }
-  .header.show-nav .nav{display:flex}
+  
+  /* التعديل الأساسي لحل مشكلة الثلاث خطوط */
+  .nav.show-nav{
+    display: flex !important;
+  }
+
   .menu-toggle{
     display:block;
     color:var(--text);
