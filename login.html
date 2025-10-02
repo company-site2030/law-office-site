@@ -5,9 +5,28 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>تسجيل الدخول</title>
 <link rel="stylesheet" href="style.css">
-<script src="firebase.js"></script>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyAzH6gqMdbxKhoZwkWwfJuuopElNRU2JsU",
+    authDomain: "alotebi-3500c.firebaseapp.com",
+    projectId: "alotebi-3500c",
+    storageBucket: "alotebi-3500c.appspot.com",
+    messagingSenderId: "99457641243",
+    appId: "1:99457641243:web:b9e86295f64e4f652b81be",
+    measurementId: "G-HQF5V5FY2L"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+</script>
 </head>
 <body>
+
 <div class="header container">
   <div class="logo">⚖️ <span class="lawyer-name">مكتب المحامي محمد العتيبي</span></div>
   <div class="nav">
@@ -40,34 +59,35 @@
 </footer>
 
 <script>
-const menuToggle = document.querySelector('.menu-toggle');
-const nav = document.querySelector('.nav');
-menuToggle.addEventListener('click', () => nav.classList.toggle('show-nav'));
+  const menuToggle = document.querySelector('.menu-toggle');
+  const nav = document.querySelector('.nav');
+  menuToggle.addEventListener('click', () => nav.classList.toggle('show-nav'));
 
-const loginForm = document.getElementById('loginForm');
-const errorMsg = document.getElementById('errorMsg');
+  const loginForm = document.getElementById('loginForm');
+  const errorMsg = document.getElementById('errorMsg');
 
-loginForm.addEventListener('submit', async e => {
-  e.preventDefault();
-  errorMsg.innerText = '';
+  loginForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    errorMsg.innerText = '';
 
-  const email = document.getElementById('email').value.trim();
-  const password = document.getElementById('password').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
 
-  if (!email || !password) {
-    errorMsg.innerText = 'يرجى إدخال البريد وكلمة المرور';
-    return;
-  }
+    if (!email || !password) {
+      errorMsg.innerText = 'يرجى إدخال البريد وكلمة المرور';
+      return;
+    }
 
-  try {
-    await auth.signInWithEmailAndPassword(email, password);
-    loginForm.reset();
-    window.location.href = 'dashboard.html';
-  } catch(err) {
-    console.error(err);
-    errorMsg.innerText = 'البريد أو كلمة المرور غير صحيحة';
-  }
-});
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+      loginForm.reset();
+      window.location.href = 'dashboard.html';
+    } catch(err) {
+      console.error(err);
+      errorMsg.innerText = err.message; // عرض رسالة الخطأ الحقيقية
+    }
+  });
 </script>
+
 </body>
 </html>
