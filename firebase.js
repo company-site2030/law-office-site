@@ -1,10 +1,11 @@
+<!-- Firebase App (الأساسي) -->
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script>
 
 <script>
-  // إعداد Firebase
+  // تكوين Firebase
   const firebaseConfig = {
     apiKey: "AIzaSyAzH6gqMdbxKhoZwkWwfJuuopElNRU2JsU",
     authDomain: "alotebi-3500c.firebaseapp.com",
