@@ -49,9 +49,10 @@ menuToggle.addEventListener('click', () => nav.classList.toggle('show-nav'));
 const loginForm = document.getElementById('loginForm');
 const errorMsg = document.getElementById('errorMsg');
 
-loginForm.addEventListener('submit', async (e) => {
+loginForm.addEventListener('submit', e => {
   e.preventDefault();
   errorMsg.innerText = '';
+
   const email = document.getElementById('email').value.trim();
   const password = document.getElementById('password').value.trim();
 
@@ -60,14 +61,17 @@ loginForm.addEventListener('submit', async (e) => {
     return;
   }
 
-  try {
-    await auth.signInWithEmailAndPassword(email, password);
-    loginForm.reset();
-    window.location.href = 'dashboard.html';
-  } catch (err) {
-    console.error(err);
-    errorMsg.innerText = 'البريد أو كلمة المرور غير صحيحة';
-  }
+  auth.signInWithEmailAndPassword(email, password)
+    .then(() => {
+      // فقط عند نجاح الدخول يتم إعادة تعيين الحقول
+      loginForm.reset();
+      window.location.href = 'dashboard.html';
+    })
+    .catch(err => {
+      console.error('خطأ تسجيل الدخول:', err);
+      errorMsg.innerText = 'البريد أو كلمة المرور غير صحيحة';
+      // الحقول تبقى كما هي لتسهيل تصحيح البيانات
+    });
 });
 </script>
 </body>
