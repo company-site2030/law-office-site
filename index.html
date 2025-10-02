@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="header container">
-  <div class="logo">⚖️ مكتب المحامي <span class="lawyer-name">محمد العتيبي</span></div>
+  <div class="logo">⚖️ <span class="lawyer-name">مكتب المحامي محمد العتيبي</span></div>
   <div class="nav">
     <a href="#home">الرئيسية</a>
     <a href="#about">من نحن</a>
@@ -91,12 +91,11 @@
 
 <script src="script.js"></script>
 <script>
-// قائمة الجوال
+// قائمة الجوال الزجاجية
 const menuToggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.nav');
-
 menuToggle.addEventListener('click', () => {
-  nav.classList.toggle('active');
+  nav.classList.toggle('show-nav');
 });
 </script>
 </body>
