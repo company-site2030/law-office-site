@@ -9,7 +9,7 @@
   <!-- Open Graph لمعاينة الرابط عند الإرسال -->
   <meta property="og:title" content="مكتب المحامي محمد العتيبي">
   <meta property="og:description" content="خبرة قانونية في استرجاع الأموال من شركات الفوركس وتمثيل العملاء محلياً ودولياً.">
-  <meta property="og:image" content="https://images.pexels.com/photos/6077169/pexels-photo-6077169.jpeg?auto=compress&cs=tinysrgb&w=1200">
+  <meta property="og:image" content="https://images.pexels.com/photos/5668486/pexels-photo-5668486.jpeg?auto=compress&cs=tinysrgb&w=1200">
   <meta property="og:url" content="https://example.com">
   <meta property="og:type" content="website">
 </head>
@@ -52,7 +52,7 @@
         </div>
       </div>
       <div class="right">
-        <img src="https://images.pexels.com/photos/6077169/pexels-photo-6077169.jpeg?auto=compress&cs=tinysrgb&w=600" alt="مكتب محاماة">
+        <img src="https://images.pexels.com/photos/5668486/pexels-photo-5668486.jpeg?auto=compress&cs=tinysrgb&w=600" alt="مكتب محاماة">
       </div>
     </section>
 
@@ -72,15 +72,15 @@
       <h2>قصص نجاحنا</h2>
       <div class="cases-grid">
         <div class="case-card glass">
-          <img src="https://images.pexels.com/photos/6077165/pexels-photo-6077165.jpeg?auto=compress&cs=tinysrgb&w=600" alt="قصة نجاح 1">
+          <img src="https://images.pexels.com/photos/5668484/pexels-photo-5668484.jpeg?auto=compress&cs=tinysrgb&w=600" alt="قصة نجاح 1">
           <p>استرجاع كامل لمبالغ مستثمرة في شركات وهمية على مستوى دولي.</p>
         </div>
         <div class="case-card glass">
-          <img src="https://images.pexels.com/photos/6077172/pexels-photo-6077172.jpeg?auto=compress&cs=tinysrgb&w=600" alt="قصة نجاح 2">
+          <img src="https://images.pexels.com/photos/5668475/pexels-photo-5668475.jpeg?auto=compress&cs=tinysrgb&w=600" alt="قصة نجاح 2">
           <p>حل نزاعات قانونية ضد مؤسسات مالية كبرى بنجاح.</p>
         </div>
         <div class="case-card glass">
-          <img src="https://images.pexels.com/photos/6077168/pexels-photo-6077168.jpeg?auto=compress&cs=tinysrgb&w=600" alt="قصة نجاح 3">
+          <img src="https://images.pexels.com/photos/5668480/pexels-photo-5668480.jpeg?auto=compress&cs=tinysrgb&w=600" alt="قصة نجاح 3">
           <p>تمثيل عملائنا أمام محاكم دولية لحماية حقوقهم المالية.</p>
         </div>
       </div>
@@ -104,12 +104,18 @@
   <!-- أيقونة المحامي الثابتة -->
   <a href="contact.html" class="lawyer-icon" title="اطلب استشارة">⚖️</a>
 
-  <!-- سكربت قائمة الجوال -->
+  <!-- سكربت قائمة الجوال واصلاح 3 خطوط -->
   <script>
     const menuToggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('.nav');
-    menuToggle.addEventListener('click', () => {
+    menuToggle.addEventListener('click', function(e){
+      e.stopPropagation();
       nav.classList.toggle('show-nav');
+    });
+    document.addEventListener('click', function(e){
+      if(!nav.contains(e.target) && !menuToggle.contains(e.target)){
+        nav.classList.remove('show-nav');
+      }
     });
   </script>
 </body>
