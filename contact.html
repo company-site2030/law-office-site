@@ -37,18 +37,19 @@
         نحن هنا لمساعدتك في أي وقت. يمكنك التواصل معنا عبر النموذج التالي، 
         وسنرد عليك في أقرب وقت ممكن. 
       </p>
-      <form id="contactForm">
-        <input type="text" id="cname" placeholder="اسمك" required>
-        <input type="email" id="cemail" placeholder="بريدك الإلكتروني" required>
-        <textarea id="cmsg" placeholder="رسالتك" required></textarea>
+
+      <!-- نموذج Formspree -->
+      <form action="https://formspree.io/f/xvgwgana" method="POST">
+        <input type="text" name="name" placeholder="اسمك" required>
+        <input type="email" name="_replyto" placeholder="بريدك الإلكتروني" required>
+        <input type="text" name="phone" placeholder="رقم هاتفك (اختياري)">
+        <textarea name="message" placeholder="رسالتك" required></textarea>
         <button type="submit">إرسال</button>
       </form>
 
       <div class="contact-info">
-        <h3>معلومات الاتصال</h3>
+        <h3>موقع المكتب</h3>
         <p>📍 الرياض، المملكة العربية السعودية</p>
-        <p>📞 055-123-4567</p>
-        <p>📧 info@lawyer-office.com</p>
       </div>
     </section>
   </main>
@@ -61,6 +62,7 @@
   <!-- أيقونة المحامي الثابتة -->
   <a href="contact.html" class="lawyer-icon" title="اطلب استشارة">⚖️</a>
 
+  <!-- سكربت الهيدر 3 خطوط -->
   <script>
     const menuToggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('.nav');
