@@ -1,6 +1,73 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>خدماتنا</title><link rel="stylesheet" href="style.css"><script src="firebase.js"></script></head><body>
-<div class="header container"><div class="logo">مكتب المحامي <span>محمد العتيبي</span></div><div class="menu-toggle">☰</div></div>
-<main class="container"><section class="glass"><h2>خدماتنا</h2><ul><li>استرجاع الأموال</li><li>الترافع</li></ul></section></main>
-<script src="script.js"></script></body></html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>خدماتنا - مكتب المحامي محمد العتيبي</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="خدماتنا - مكتب المحامي محمد العتيبي">
+  <meta property="og:description" content="تعرف على مجموعة خدمات مكتب المحامي محمد العتيبي: استرجاع الأموال، القضايا التجارية، الاستشارات القانونية، الترافع محليًا وعالميًا.">
+  <meta property="og:image" content="https://via.placeholder.com/1200x630.png?text=⚖️+خدماتنا">
+  <meta property="og:url" content="https://example.com/services.html">
+  <meta property="og:type" content="website">
+</head>
+<body>
+  <!-- الهيدر -->
+  <div class="header container">
+    <div class="logo">⚖️ <span class="lawyer-name">مكتب المحامي محمد العتيبي</span></div>
+    <div class="nav">
+      <a href="index.html">الرئيسية</a>
+      <a href="about.html">من نحن</a>
+      <a href="services.html" class="active">خدماتنا</a>
+      <a href="cases.html">قصص نجاح</a>
+      <a href="contact.html">تواصل</a>
+      <a href="login.html">تسجيل الدخول</a>
+      <a href="register.html">تسجيل</a>
+    </div>
+    <div class="menu-toggle">☰</div>
+  </div>
+
+  <!-- المحتوى -->
+  <main class="container">
+    <section id="services" class="glass">
+      <h2>خدماتنا</h2>
+      <p>
+        نحن نقدم مجموعة شاملة من الخدمات القانونية التي تلبي احتياجات
+        الأفراد والشركات محليًا ودوليًا. مكتبنا يسعى دائمًا لتقديم حلول
+        مبتكرة وقانونية تضمن حقوق عملائنا.
+      </p>
+      <ul>
+        <li>📌 <strong>استرجاع الأموال</strong>: من شركات الفوركس الوهمية والاستثمارات المشبوهة في جميع أنحاء العالم.</li>
+        <li>📌 <strong>الترافع أمام المحاكم</strong>: التجارية والجنائية والمدنية داخل المملكة وخارجها.</li>
+        <li>📌 <strong>الاستشارات القانونية</strong>: في الاستثمار، العقود، القضايا العمالية، القضايا الأسرية، والقضايا الدولية.</li>
+        <li>📌 <strong>إعداد العقود</strong>: صياغة ومراجعة العقود التجارية والعقارية بشكل احترافي يضمن حقوق عملائنا.</li>
+        <li>📌 <strong>حل النزاعات</strong>: عبر الوساطة والتحكيم قبل اللجوء إلى المحاكم.</li>
+        <li>📌 <strong>تمثيل الشركات</strong>: في القضايا المعقدة والصفقات الكبرى محليًا وعالميًا.</li>
+      </ul>
+      <p>
+        مكتب المحامي محمد العتيبي يعمل وفق أعلى معايير الجودة والاحترافية،
+        مع التزام كامل بالسرية والدقة في معالجة جميع القضايا، أياً كان
+        حجمها أو نوعها.
+      </p>
+    </section>
+  </main>
+
+  <!-- الفوتر -->
+  <footer class="container" style="text-align:center;padding:24px 0;color:rgba(255,255,255,0.6)">
+    © 2025 مكتب المحامي محمد العتيبي
+  </footer>
+
+  <!-- أيقونة المحامي الثابتة -->
+  <a href="contact.html" class="lawyer-icon" title="اطلب استشارة">⚖️</a>
+
+  <script>
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.nav');
+    menuToggle.addEventListener('click', () => {
+      nav.classList.toggle('show-nav');
+    });
+  </script>
+</body>
+</html>
