@@ -9,7 +9,7 @@
   <!-- Open Graph -->
   <meta property="og:title" content="تواصل معنا - مكتب المحامي محمد العتيبي">
   <meta property="og:description" content="تواصل مع مكتب المحامي محمد العتيبي للاستشارات القانونية، استرجاع الأموال، والتمثيل القانوني المحلي والدولي.">
-  <meta property="og:image" content="https://via.placeholder.com/1200x630.png?text=⚖️+تواصل+معنا">
+  <meta property="og:image" content="https://images.pexels.com/photos/5668492/pexels-photo-5668492.jpeg?auto=compress&cs=tinysrgb&w=1200">
   <meta property="og:url" content="https://example.com/contact.html">
   <meta property="og:type" content="website">
 </head>
@@ -62,12 +62,24 @@
   <!-- أيقونة المحامي الثابتة -->
   <a href="contact.html" class="lawyer-icon" title="اطلب استشارة">⚖️</a>
 
-  <!-- سكربت الهيدر 3 خطوط -->
+  <!-- سكربت قائمة الجوال -->
   <script>
     const menuToggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('.nav');
-    menuToggle.addEventListener('click', () => {
+
+    function toggleNav(e){
+      e.stopPropagation();
       nav.classList.toggle('show-nav');
+    }
+
+    menuToggle.addEventListener('click', toggleNav);
+    menuToggle.addEventListener('touchstart', toggleNav);
+
+    // إغلاق القائمة عند الضغط خارجها
+    document.addEventListener('click', function(e){
+      if(!nav.contains(e.target) && !menuToggle.contains(e.target)){
+        nav.classList.remove('show-nav');
+      }
     });
   </script>
 </body>
