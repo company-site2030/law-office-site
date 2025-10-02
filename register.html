@@ -13,7 +13,6 @@
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script>
 
 <script>
-  // تكوين Firebase
   const firebaseConfig = {
     apiKey: "AIzaSyAzH6gqMdbxKhoZwkWwfJuuopElNRU2JsU",
     authDomain: "alotebi-3500c.firebaseapp.com",
@@ -23,12 +22,9 @@
     appId: "1:99457641243:web:b9e86295f64e4f652b81be",
     measurementId: "G-HQF5V5FY2L"
   };
-
-  // تهيئة Firebase
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
   const db = firebase.firestore();
-  const storage = firebase.storage();
 </script>
 </head>
 <body>
@@ -68,12 +64,10 @@
 </footer>
 
 <script>
-  // قائمة الهاتف
   const menuToggle = document.querySelector('.menu-toggle');
   const nav = document.querySelector('.nav');
   menuToggle.addEventListener('click', () => nav.classList.toggle('show-nav'));
 
-  // تسجيل مستخدم
   const registerForm = document.getElementById('registerForm');
   const errorMsg = document.getElementById('errorMsg');
 
@@ -106,11 +100,14 @@
         documents: []
       });
 
+      // رسالة نجاح قبل إعادة التوجيه
+      alert("تم إنشاء الحساب بنجاح!");
       registerForm.reset();
-      window.location.href = 'dashboard.html'; // تحويل بعد التسجيل
+      window.location.href = 'dashboard.html';
+
     } catch(err) {
       console.error(err);
-      errorMsg.innerText = err.message; // رسالة الخطأ الفعلية من Firebase
+      errorMsg.innerText = err.message;
     }
   });
 </script>
