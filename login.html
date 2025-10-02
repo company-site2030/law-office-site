@@ -9,9 +9,13 @@
   <!-- Open Graph -->
   <meta property="og:title" content="تسجيل الدخول - مكتب المحامي محمد العتيبي">
   <meta property="og:description" content="قم بتسجيل الدخول للوصول إلى خدماتنا القانونية بسهولة.">
-  <meta property="og:image" content="https://via.placeholder.com/1200x630.png?text=⚖️+تسجيل+الدخول">
+  <meta property="og:image" content="https://images.pexels.com/photos/5668486/pexels-photo-5668486.jpeg?auto=compress&cs=tinysrgb&w=1200">
   <meta property="og:url" content="https://example.com/login.html">
   <meta property="og:type" content="website">
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
 </head>
 <body>
   <!-- الهيدر -->
@@ -33,14 +37,15 @@
   <main class="container">
     <section class="glass" style="max-width:400px;margin:auto;margin-top:40px;padding:20px;">
       <h2 style="text-align:center;">تسجيل الدخول</h2>
-      <form>
-        <input type="email" placeholder="البريد الإلكتروني" required>
-        <input type="password" placeholder="كلمة المرور" required>
+      <form id="loginForm">
+        <input type="email" id="email" placeholder="البريد الإلكتروني" required>
+        <input type="password" id="password" placeholder="كلمة المرور" required>
         <button type="submit">دخول</button>
       </form>
       <p style="text-align:center;margin-top:10px;">
         ليس لديك حساب؟ <a href="register.html">سجل الآن</a>
       </p>
+      <p id="loginMsg" style="color:red;text-align:center;"></p>
     </section>
   </main>
 
@@ -53,17 +58,46 @@
   <a href="contact.html" class="lawyer-icon" title="اطلب استشارة">⚖️</a>
 
   <script>
-    // الهيدر 3 خطوط للجوال تعمل على كل الصفحات
+    // Firebase Config
+    const firebaseConfig = {
+      apiKey: "AIzaSyAzH6gqMdbxKhoZwkWwfJuuopElNRU2JsU",
+      authDomain: "alotebi-3500c.firebaseapp.com",
+      projectId: "alotebi-3500c"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // الهيدر 3 خطوط للجوال
     const menuToggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('.nav');
 
-    function toggleNav(e){
-      e.preventDefault();
+    menuToggle.addEventListener('click', function(e){
+      e.stopPropagation();
       nav.classList.toggle('show-nav');
-    }
+    });
+    document.addEventListener('click', function(e){
+      if(!nav.contains(e.target) && !menuToggle.contains(e.target)){
+        nav.classList.remove('show-nav');
+      }
+    });
 
-    menuToggle.addEventListener('click', toggleNav);
-    menuToggle.addEventListener('touchstart', toggleNav);
+    // تسجيل الدخول
+    const loginForm = document.getElementById('loginForm');
+    const loginMsg = document.getElementById('loginMsg');
+
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      loginMsg.textContent = '';
+
+      try {
+        await auth.signInWithEmailAndPassword(email, password);
+        window.location.href = 'dashboard.html'; // بعد الدخول توجيه للداشبورد
+      } catch (error) {
+        loginMsg.textContent = error.message;
+      }
+    });
   </script>
 </body>
 </html>
