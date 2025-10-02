@@ -9,7 +9,7 @@
   <!-- Open Graph -->
   <meta property="og:title" content="من نحن - مكتب المحامي محمد العتيبي">
   <meta property="og:description" content="تعرف على مكتب المحامي محمد العتيبي وخبرته الطويلة في القضايا القانونية والاستشارات.">
-  <meta property="og:image" content="https://images.pexels.com/photos/6077138/pexels-photo-6077138.jpeg?auto=compress&cs=tinysrgb&w=1200">
+  <meta property="og:image" content="https://images.pexels.com/photos/5668486/pexels-photo-5668486.jpeg?auto=compress&cs=tinysrgb&w=1200">
   <meta property="og:url" content="https://example.com/about.html">
   <meta property="og:type" content="website">
 </head>
@@ -55,7 +55,7 @@
           </p>
         </div>
         <div style="flex:1;min-width:280px;">
-          <img src="https://images.pexels.com/photos/6077138/pexels-photo-6077138.jpeg?auto=compress&cs=tinysrgb&w=600" 
+          <img src="https://images.pexels.com/photos/5668486/pexels-photo-5668486.jpeg?auto=compress&cs=tinysrgb&w=600" 
                alt="مكتب محاماة" style="width:100%;border-radius:16px;box-shadow:0 10px 30px rgba(2,6,23,0.5);">
         </div>
       </div>
@@ -74,8 +74,20 @@
   <script>
     const menuToggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('.nav');
-    menuToggle.addEventListener('click', () => {
+
+    function toggleNav(e){
+      e.stopPropagation();
       nav.classList.toggle('show-nav');
+    }
+
+    menuToggle.addEventListener('click', toggleNav);
+    menuToggle.addEventListener('touchstart', toggleNav);
+
+    // إغلاق القائمة عند الضغط خارجها
+    document.addEventListener('click', function(e){
+      if(!nav.contains(e.target) && !menuToggle.contains(e.target)){
+        nav.classList.remove('show-nav');
+      }
     });
   </script>
 </body>
