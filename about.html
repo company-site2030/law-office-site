@@ -1,6 +1,69 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>من نحن</title><link rel="stylesheet" href="style.css"><script src="firebase.js"></script></head><body>
-<div class="header container"><div class="logo">مكتب المحامي <span>محمد العتيبي</span></div><div class="menu-toggle">☰</div></div>
-<main class="container"><section class="glass"><h2>من نحن</h2><p>مكتب محاماة متخصص...</p></section></main>
-<script src="script.js"></script></body></html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>من نحن - مكتب المحامي محمد العتيبي</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="من نحن - مكتب المحامي محمد العتيبي">
+  <meta property="og:description" content="تعرف على مكتب المحامي محمد العتيبي وخبرته الطويلة في القضايا القانونية والاستشارات.">
+  <meta property="og:image" content="https://via.placeholder.com/1200x630.png?text=⚖️+من+نحن">
+  <meta property="og:url" content="https://example.com/about.html">
+  <meta property="og:type" content="website">
+</head>
+<body>
+  <!-- الهيدر -->
+  <div class="header container">
+    <div class="logo">⚖️ <span class="lawyer-name">مكتب المحامي محمد العتيبي</span></div>
+    <div class="nav">
+      <a href="index.html">الرئيسية</a>
+      <a href="about.html" class="active">من نحن</a>
+      <a href="services.html">خدماتنا</a>
+      <a href="cases.html">قصص نجاح</a>
+      <a href="contact.html">تواصل</a>
+      <a href="login.html">تسجيل الدخول</a>
+      <a href="register.html">تسجيل</a>
+    </div>
+    <div class="menu-toggle">☰</div>
+  </div>
+
+  <!-- المحتوى -->
+  <main class="container">
+    <section id="about" class="glass">
+      <h2>من نحن</h2>
+      <p>
+        نحن مكتب محاماة متخصص بخدمة الأفراد والشركات، ونتمتع بخبرة واسعة
+        في مجال القضايا المالية والتجارية والاستثمارية. نؤمن بأن العدالة
+        تبدأ من الكلمة الصادقة والعمل المتفاني في خدمة عملائنا.
+      </p>
+      <p>
+        على مدى سنوات، قمنا بتمثيل مئات العملاء داخل المملكة العربية السعودية
+        وخارجها، وحققنا نجاحات بارزة في استرجاع حقوق المستثمرين وحماية أموالهم
+        من الشركات الوهمية والأساليب الاحتيالية.
+      </p>
+      <p>
+        مكتبنا يضم نخبة من المستشارين والمحامين المعتمدين، الذين يسعون لتقديم
+        أفضل الحلول القانونية بما يتناسب مع كل قضية وظروفها الخاصة.
+      </p>
+    </section>
+  </main>
+
+  <!-- الفوتر -->
+  <footer class="container" style="text-align:center;padding:24px 0;color:rgba(255,255,255,0.6)">
+    © 2025 مكتب المحامي محمد العتيبي
+  </footer>
+
+  <!-- أيقونة المحامي الثابتة -->
+  <a href="contact.html" class="lawyer-icon" title="اطلب استشارة">⚖️</a>
+
+  <script>
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.nav');
+    menuToggle.addEventListener('click', () => {
+      nav.classList.toggle('show-nav');
+    });
+  </script>
+</body>
+</html>
