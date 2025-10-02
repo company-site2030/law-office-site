@@ -1,94 +1,345 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>لوحة العميل</title>
-<link rel="stylesheet" href="style.css">
-<script src="firebase.js"></script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>لوحة العميل — مكتب المحامي محمد العتيبي</title>
+<link rel="stylesheet" href="style.css" />
+
+<!-- Firebase SDK (compat) -->
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script>
+
+<!-- EmailJS SDK (لإرسال الملفات إلى بريدك دون تخزين على Firebase) -->
+<script src="https://cdn.emailjs.com/sdk/3.2.0/email.min.js"></script>
+
+<script>
+  /*******************************************************
+   * 1) أدخل إعدادات Firebase هنا (نفس اللي استخدمتها في register/login)
+   *******************************************************/
+  const firebaseConfig = {
+    apiKey: "AIzaSyAzH6gqMdbxKhoZwkWwfJuuopElNRU2JsU",
+    authDomain: "alotebi-3500c.firebaseapp.com",
+    projectId: "alotebi-3500c",
+    storageBucket: "alotebi-3500c.appspot.com",
+    messagingSenderId: "99457641243",
+    appId: "1:99457641243:web:b9e86295f64e4f652b81be",
+    measurementId: "G-HQF5V5FY2L"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+  const storage = firebase.storage();
+
+  /*******************************************************
+   * 2) إعداد EmailJS (اختياري لكن موصى به إذا لا تريد حفظ الملفات في Storage)
+   * - سجّل حساب مجاني على https://www.emailjs.com
+   * - أنشئ Service (مثل gmail أو SMTP) ثم Template
+   * - ضع هنا userID, serviceID, templateID
+   *
+   * ملاحظة: Template يجب أن يقبل متغيرات مثل:
+   *   from_name, from_email, subject, message, attachment_base64, filename
+   *
+   * مثال: emailjs.send(serviceID, templateID, templateParams, userID)
+   *******************************************************/
+  const EMAILJS_USER_ID = "YOUR_EMAILJS_USER_ID"; // ضع user id هنا (مثال: user_xxx)
+  const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";   // مثال: service_xxx
+  const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID"; // مثال: template_xxx
+
+  if (typeof emailjs !== "undefined" && EMAILJS_USER_ID && EMAILJS_USER_ID !== "YOUR_EMAILJS_USER_ID") {
+    emailjs.init(EMAILJS_USER_ID);
+  }
+</script>
+
+<style>
+/* بعض تحسينات بسيطة لستايل الداشبورد مبنية على style.css */
+.container { max-width:1100px;margin:0 auto;padding:24px }
+.header{ position:fixed;left:0;right:0;top:18px;margin:0 auto;z-index:1000;backdrop-filter: blur(12px);display:flex;align-items:center;justify-content:space-between;padding:10px 18px;border-radius:22px;background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));box-shadow:0 10px 30px rgba(2,6,23,0.6);width:calc(100% - 48px);border:1px solid rgba(255,255,255,0.06)}
+.logo{font-weight:700;font-size:20px;display:flex;align-items:center;gap:8px}
+.nav{display:flex;gap:14px;align-items:center}
+.nav a{padding:8px 12px;border-radius:12px;color:var(--text);font-weight:600;font-size:16px}
+.menu-toggle{display:none;cursor:pointer}
+main{padding-top:120px}
+.dashboard-grid{display:grid;grid-template-columns:1fr 360px;gap:20px}
+.card{padding:18px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.04);box-shadow:0 6px 30px rgba(2,6,23,0.5)}
+.info-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed rgba(255,255,255,0.02)}
+.info-row:last-child{border-bottom:none}
+.small{font-size:13px;color:rgba(255,255,255,0.7)}
+.actions{display:flex;gap:8px;margin-top:12px}
+button.primary{padding:10px 14px;border-radius:10px;border:0;background:linear-gradient(90deg,#2f9bff,#5dc1ff);color:#042033;font-weight:700}
+button.ghost{padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--text)}
+.upload-list{margin-top:12px;max-height:220px;overflow:auto}
+.upload-item{padding:8px;border-radius:8px;background:rgba(255,255,255,0.02);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+.note{font-size:13px;color:rgba(255,255,255,0.7);margin-top:8px}
+@media(max-width:900px){ .dashboard-grid{grid-template-columns:1fr} .menu-toggle{display:block} .nav{display:none} .header.show-nav .nav{display:flex} }
+</style>
 </head>
 <body>
-<div class="header container">
+<div class="header container" id="header">
   <div class="logo">⚖️ <span class="lawyer-name">مكتب المحامي محمد العتيبي</span></div>
+  <div class="nav" id="mainNav">
+    <a href="index.html#home" class="nav-link">الرئيسية</a>
+    <a href="index.html#about" class="nav-link">من نحن</a>
+    <a href="index.html#services" class="nav-link">خدماتنا</a>
+    <a href="index.html#cases" class="nav-link">قصص نجاح</a>
+    <a href="index.html#contact" class="nav-link">تواصل</a>
+    <a href="login.html" id="loginLink" class="nav-link">تسجيل الدخول</a>
+    <a href="register.html" id="registerLink" class="nav-link">تسجيل</a>
+    <a href="dashboard.html" id="dashboardLink" class="nav-link" style="display:none">لوحة العميل</a>
+  </div>
   <div class="menu-toggle">☰</div>
 </div>
 
 <main class="container">
-  <section class="glass">
-    <h2>لوحة العميل</h2>
-    <div id="clientData">جاري تحميل البيانات...</div>
+  <h2 style="margin-top:0">لوحة العميل</h2>
 
-    <h3>رفع المستندات</h3>
-    <input type="file" id="docInput">
-    <button id="uploadBtn">رفع</button>
+  <div class="dashboard-grid">
+    <!-- العمود الرئيسي -->
+    <div class="card">
+      <h3>معلومات العميل</h3>
+      <div id="clientInfo">
+        <div class="info-row"><div><strong id="cName">—</strong><div class="small">الاسم</div></div><div></div></div>
+        <div class="info-row"><div><strong id="cId">—</strong><div class="small">رقم الهوية</div></div></div>
+        <div class="info-row"><div><strong id="cEmail">—</strong><div class="small">البريد الإلكتروني</div></div></div>
+        <div class="info-row"><div><strong id="cAmount">—</strong><div class="small">القضية / المبلغ</div></div></div>
+      </div>
 
-    <h3>متابعة القضية</h3>
-    <div id="caseStatus">جاري التحميل...</div>
+      <div class="actions">
+        <button class="primary" id="logoutBtn">تسجيل خروج</button>
+        <button class="ghost" id="refreshBtn">تحديث البيانات</button>
+      </div>
 
-    <button id="logoutBtn">تسجيل خروج</button>
-  </section>
+      <hr style="margin:16px 0;opacity:0.06">
+
+      <h4>رفع مستند (آمن، يرسل مباشرة لبريد الإدارة)</h4>
+      <p class="note">يمكنك رفع مستند هنا وإرساله مباشرة إلى إيميل المكتب بدون تخزين دائم على موقعنا. الحجم قد يكون محدودًا حسب إعداد EmailJS.</p>
+
+      <form id="uploadForm">
+        <input type="file" id="fileInput" accept=".pdf,.jpg,.png,.doc,.docx" required />
+        <input type="text" id="docTitle" placeholder="عنوان المستند (مثال: إثبات تحويل)" style="margin-top:8px;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);width:100%" />
+        <button type="submit" class="primary" style="margin-top:8px">رفع وإرسال</button>
+      </form>
+
+      <div class="upload-list" id="uploadList"></div>
+    </div>
+
+    <!-- العمود الجانبي -->
+    <aside>
+      <div class="card">
+        <h3>حالة الحساب</h3>
+        <p id="statusText">—</p>
+        <p class="small">تاريخ التسجيل: <span id="createdAt">—</span></p>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <h3>ملاحظات</h3>
+        <p class="small">يمكنك رفع ملفات إثبات الدفع أو العقود. بعد الإرسال ستصل نسخة لبريد المكتب — تأكد من أن الملف واضح.</p>
+      </div>
+    </aside>
+  </div>
 </main>
 
-<script>
-const menuToggle = document.querySelector('.menu-toggle');
-const nav = document.querySelector('.nav');
-menuToggle.addEventListener('click', () => nav.classList.toggle('show-nav'));
+<footer class="container" style="text-align:center;padding:24px 0;color:rgba(255,255,255,0.6)">
+  © 2025 مكتب المحامي محمد العتيبي
+</footer>
 
-// التأكد من تسجيل الدخول
-auth.onAuthStateChanged(user => {
-  if (!user) {
-    window.location.href = 'login.html';
-  } else {
-    const uid = user.uid;
-    db.collection('clients').doc(uid).get().then(doc => {
-      if (doc.exists) {
-        const data = doc.data();
-        document.getElementById('clientData').innerHTML = `
-          <p>الاسم: ${data.name || '-'}</p>
-          <p>رقم الهوية: ${data.idNumber || '-'}</p>
-          <p>المبلغ المطلوب استرداده: ${data.amount || '-'}</p>
-          <p>البريد الإلكتروني: ${data.email || '-'}</p>
-        `;
-        document.getElementById('caseStatus').innerText = `حالة القضية: ${data.status || '-'}`;
+<script>
+/* UI elements */
+const loginLink = document.getElementById('loginLink');
+const registerLink = document.getElementById('registerLink');
+const dashboardLink = document.getElementById('dashboardLink');
+const cName = document.getElementById('cName');
+const cId = document.getElementById('cId');
+const cEmail = document.getElementById('cEmail');
+const cAmount = document.getElementById('cAmount');
+const createdAt = document.getElementById('createdAt');
+const statusText = document.getElementById('statusText');
+const logoutBtn = document.getElementById('logoutBtn');
+const refreshBtn = document.getElementById('refreshBtn');
+
+const uploadForm = document.getElementById('uploadForm');
+const fileInput = document.getElementById('fileInput');
+const docTitle = document.getElementById('docTitle');
+const uploadList = document.getElementById('uploadList');
+
+/* إخفاء/إظهار روابط الهيدر حسب حالة تسجيل الدخول */
+function showLoggedInUI() {
+  loginLink.style.display = 'none';
+  registerLink.style.display = 'none';
+  dashboardLink.style.display = 'inline-block';
+}
+function showLoggedOutUI() {
+  loginLink.style.display = 'inline-block';
+  registerLink.style.display = 'inline-block';
+  dashboardLink.style.display = 'none';
+}
+
+/* مراقب حالة المصادقة */
+let currentUID = null;
+auth.onAuthStateChanged(async user => {
+  if (user) {
+    currentUID = user.uid;
+    showLoggedInUI();
+    // جلب بيانات العميل من مجموعة clients
+    try {
+      const docRef = db.collection('clients').doc(user.uid);
+      const docSnap = await docRef.get();
+      if (docSnap.exists) {
+        const data = docSnap.data();
+        cName.innerText = data.name || '—';
+        cId.innerText = data.idNumber || '—';
+        cEmail.innerText = data.email || user.email || '—';
+        cAmount.innerText = data.amount || '—';
+        statusText.innerText = data.status || '—';
+        if (data.createdAt && data.createdAt.toDate) {
+          createdAt.innerText = data.createdAt.toDate().toLocaleString();
+        } else {
+          createdAt.innerText = '—';
+        }
       } else {
-        document.getElementById('clientData').innerText = 'لا توجد بيانات متاحة.';
-        document.getElementById('caseStatus').innerText = '';
+        // إن لم توجد بيانات clients، يمكنك إنشاؤها أو إظهار رسالة
+        cName.innerText = user.displayName || '—';
+        cEmail.innerText = user.email || '—';
+        cId.innerText = '—';
+        cAmount.innerText = '—';
+        statusText.innerText = '—';
+        createdAt.innerText = '—';
       }
-    }).catch(err => {
-      console.error(err);
-      document.getElementById('clientData').innerText = 'حدث خطأ أثناء تحميل البيانات.';
-    });
+    } catch (err) {
+      console.error("Error fetching client doc:", err);
+      statusText.innerText = 'حدث خطأ بجلب البيانات';
+    }
+  } else {
+    currentUID = null;
+    showLoggedOutUI();
+    // تحويل للخروج (اختياري)
+    // window.location.href = 'login.html';
   }
 });
 
-// رفع المستندات
-document.getElementById('uploadBtn').addEventListener('click', async () => {
-  const file = document.getElementById('docInput').files[0];
-  if (!file) {
-    alert('اختر ملف');
+/* تسجيل خروج */
+logoutBtn.addEventListener('click', async () => {
+  try {
+    await auth.signOut();
+    alert('تم تسجيل الخروج');
+    window.location.href = 'index.html';
+  } catch (err) {
+    console.error(err);
+    alert('حدث خطأ أثناء تسجيل الخروج');
+  }
+});
+
+/* تحديث بيانات (إعادة تحميل من Firestore) */
+refreshBtn.addEventListener('click', async () => {
+  if (!currentUID) return;
+  try {
+    const docSnap = await db.collection('clients').doc(currentUID).get();
+    if (docSnap.exists) {
+      const data = docSnap.data();
+      cName.innerText = data.name || '—';
+      cId.innerText = data.idNumber || '—';
+      cEmail.innerText = data.email || '—';
+      cAmount.innerText = data.amount || '—';
+      statusText.innerText = data.status || '—';
+    } else {
+      alert('لم تُعثر بيانات على حسابك بعد');
+    }
+  } catch (err) {
+    console.error(err);
+    alert('فشل في تحديث البيانات');
+  }
+});
+
+/* --- رفع الملف وإرساله --- */
+/*
+  خيار الإرسال الافتراضي: EmailJS (لا يحتاج تخزين الملفات على Firebase Storage)
+  خطوات تفعيل EmailJS:
+   1. سجل على https://www.emailjs.com
+   2. اربط خدمة البريد (Gmail/SMTP) وأنشئ Service ID
+   3. أنشئ Template يقبل الحقول: from_name, from_email, subject, message, attachment (سنستخدم attachment as base64)
+   4. احصل على userID و ضع قيمهم في الأعلى (EMAILJS_USER_ID, EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID)
+*/
+uploadForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (!currentUID) {
+    alert('يجب أن تكون مسجل دخول أولاً');
     return;
   }
-
-  const uid = auth.currentUser.uid;
-  const storageRef = storage.ref(`documents/${uid}/${file.name}`);
-
-  try {
-    await storageRef.put(file);
-    const url = await storageRef.getDownloadURL();
-    await db.collection('clients').doc(uid).update({
-      documents: firebase.firestore.FieldValue.arrayUnion(url)
-    });
-    alert('تم رفع المستند بنجاح!');
-  } catch(err) {
-    console.error(err);
-    alert('حدث خطأ أثناء رفع الملف.');
+  const file = fileInput.files[0];
+  if (!file) {
+    alert('اختر ملف لإرساله');
+    return;
   }
-});
+  const title = docTitle.value.trim() || file.name;
 
-// تسجيل الخروج
-document.getElementById('logoutBtn').addEventListener('click', async () => {
-  await auth.signOut();
-  window.location.href = 'login.html';
+  // قراءة الملف كـ base64
+  const reader = new FileReader();
+  reader.onload = async () => {
+    const base64 = reader.result.split(',')[1]; // بدون data:*/*;base64,
+    // 1) محاولة إرسال عبر EmailJS إن تم تهيئته
+    if (typeof emailjs !== "undefined" && EMAILJS_USER_ID && EMAILJS_USER_ID !== "YOUR_EMAILJS_USER_ID") {
+      try {
+        const templateParams = {
+          from_name: cName.innerText || 'عميل',
+          from_email: cEmail.innerText || '',
+          subject: `مستند جديد: ${title}`,
+          message: `قام العميل برفع ملف بعنوان: ${title}\nالعميل: ${cName.innerText}\nرقم الهوية: ${cId.innerText}\nالبريد: ${cEmail.innerText}`,
+          attachment_base64: `data:${file.type};base64,${base64}`,
+          filename: file.name || title,
+          client_uid: currentUID
+        };
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
+        // أضف إلى الواجهة قائمة بالملفات المرسلة
+        const li = document.createElement('div');
+        li.className = 'upload-item';
+        li.innerHTML = `<div><strong>${title}</strong><div class="small">${file.name} · ${Math.round(file.size/1024)} KB</div></div><div class="small">أُرسل</div>`;
+        uploadList.prepend(li);
+        alert('تم إرسال الملف بنجاح إلى إدارة المكتب عبر البريد الإلكتروني.');
+        uploadForm.reset();
+      } catch (err) {
+        console.error('EmailJS send error:', err);
+        alert('فشل إرسال الملف عبر البريد. يمكنك المحاولة لاحقًا أو اختيار خيار التخزين.');
+      }
+      return;
+    }
+
+    // 2) كخيار بديل: رفع الملف مؤقتًا إلى Firebase Storage (يتطلب مساحة مجانية أو مدفوعة)
+    // إذا أردت تفعيل رفع Storage أزل التعليق عن السطرين التاليين، لكن لاحظ أنك قلت أنك لا تريد دفع شيء الآن.
+    /*
+    try {
+      const storageRef = storage.ref().child(`client_uploads/${currentUID}/${Date.now()}_${file.name}`);
+      const snap = await storageRef.putString(base64, 'base64', { contentType: file.type });
+      const downloadURL = await snap.ref.getDownloadURL();
+      // حفظ ميتاداتا في Firestore إن رغبت
+      await db.collection('clients').doc(currentUID).collection('uploads').add({
+        title,
+        filename: file.name,
+        size: file.size,
+        type: file.type,
+        url: downloadURL,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      const li2 = document.createElement('div');
+      li2.className = 'upload-item';
+      li2.innerHTML = `<div><strong>${title}</strong><div class="small">${file.name} · ${Math.round(file.size/1024)} KB</div></div><div class="small">مخزّن</div>`;
+      uploadList.prepend(li2);
+      alert('تم رفع الملف وتخزينه في Firebase Storage.');
+      uploadForm.reset();
+    } catch (err) {
+      console.error('Storage upload error:', err);
+      alert('فشل رفع الملف إلى Storage.');
+    }
+    */
+    // إن لم تفعل EmailJS أو Storage، فقط احتفظ بالملف محليًا (لن يرسل)
+    alert('لم يتم إرسال الملف (لم يتم تفعيل EmailJS أو Storage). إذا أردت إرسال الملفات عبر البريد فعّل EmailJS كما هو موضح في الكود.');
+  };
+
+  reader.onerror = () => {
+    alert('فشل قراءة الملف');
+  };
+  reader.readAsDataURL(file);
 });
 </script>
 </body>
