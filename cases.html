@@ -9,7 +9,7 @@
   <!-- Open Graph -->
   <meta property="og:title" content="قصص نجاح - مكتب المحامي محمد العتيبي">
   <meta property="og:description" content="اطّلع على قصص نجاح عملائنا مع مكتب المحامي محمد العتيبي: استرجاع أموال، تسويات قانونية، تمثيل أمام المحاكم، وانتصارات قانونية محلية ودولية.">
-  <meta property="og:image" content="https://images.pexels.com/photos/6077171/pexels-photo-6077171.jpeg?auto=compress&cs=tinysrgb&w=1200">
+  <meta property="og:image" content="https://images.pexels.com/photos/5668486/pexels-photo-5668486.jpeg?auto=compress&cs=tinysrgb&w=1200">
   <meta property="og:url" content="https://example.com/cases.html">
   <meta property="og:type" content="website">
 </head>
@@ -41,27 +41,27 @@
 
       <div class="cases-grid">
         <div class="case-card glass">
-          <img src="https://images.pexels.com/photos/6077165/pexels-photo-6077165.jpeg?auto=compress&cs=tinysrgb&w=600" alt="قصة نجاح 1">
+          <img src="https://images.pexels.com/photos/5668486/pexels-photo-5668486.jpeg?auto=compress&cs=tinysrgb&w=600" alt="قصة نجاح 1">
           <p>استرجاع كامل لمبلغ مستثمر تعرض للاحتيال من شركة وهمية.</p>
         </div>
         <div class="case-card glass">
-          <img src="https://images.pexels.com/photos/6077172/pexels-photo-6077172.jpeg?auto=compress&cs=tinysrgb&w=600" alt="قصة نجاح 2">
+          <img src="https://images.pexels.com/photos/5668487/pexels-photo-5668487.jpeg?auto=compress&cs=tinysrgb&w=600" alt="قصة نجاح 2">
           <p>تسوية قانونية ناجحة مع مؤسسة مالية كبرى لصالح عميلنا.</p>
         </div>
         <div class="case-card glass">
-          <img src="https://images.pexels.com/photos/6077168/pexels-photo-6077168.jpeg?auto=compress&cs=tinysrgb&w=600" alt="قصة نجاح 3">
+          <img src="https://images.pexels.com/photos/5668488/pexels-photo-5668488.jpeg?auto=compress&cs=tinysrgb&w=600" alt="قصة نجاح 3">
           <p>إلغاء عقد احتيالي دولي واسترداد الأموال للعميل.</p>
         </div>
         <div class="case-card glass">
-          <img src="https://images.pexels.com/photos/6077170/pexels-photo-6077170.jpeg?auto=compress&cs=tinysrgb&w=600" alt="قصة نجاح 4">
+          <img src="https://images.pexels.com/photos/5668489/pexels-photo-5668489.jpeg?auto=compress&cs=tinysrgb&w=600" alt="قصة نجاح 4">
           <p>تمثيل قانوني ناجح أمام محكمة تجارية في نزاع بملايين الريالات.</p>
         </div>
         <div class="case-card glass">
-          <img src="https://images.pexels.com/photos/6077171/pexels-photo-6077171.jpeg?auto=compress&cs=tinysrgb&w=600" alt="قصة نجاح 5">
+          <img src="https://images.pexels.com/photos/5668490/pexels-photo-5668490.jpeg?auto=compress&cs=tinysrgb&w=600" alt="قصة نجاح 5">
           <p>متابعة دقيقة لقضية استرداد أموال من شركات دولية معقدة.</p>
         </div>
         <div class="case-card glass">
-          <img src="https://images.pexels.com/photos/6077169/pexels-photo-6077169.jpeg?auto=compress&cs=tinysrgb&w=600" alt="قصة نجاح 6">
+          <img src="https://images.pexels.com/photos/5668491/pexels-photo-5668491.jpeg?auto=compress&cs=tinysrgb&w=600" alt="قصة نجاح 6">
           <p>تسوية قانونية متعددة الأطراف مع شركاء دوليين لصالح العميل.</p>
         </div>
       </div>
@@ -86,8 +86,20 @@
   <script>
     const menuToggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('.nav');
-    menuToggle.addEventListener('click', () => {
+
+    function toggleNav(e){
+      e.stopPropagation();
       nav.classList.toggle('show-nav');
+    }
+
+    menuToggle.addEventListener('click', toggleNav);
+    menuToggle.addEventListener('touchstart', toggleNav);
+
+    // إغلاق القائمة عند الضغط خارجها
+    document.addEventListener('click', function(e){
+      if(!nav.contains(e.target) && !menuToggle.contains(e.target)){
+        nav.classList.remove('show-nav');
+      }
     });
   </script>
 </body>
