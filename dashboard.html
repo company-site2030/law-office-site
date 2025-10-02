@@ -10,30 +10,8 @@
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script>
 
-<!-- EmailJS SDK -->
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-
-<script>
-  // تهيئة Firebase
-  const firebaseConfig = {
-    apiKey: "AIzaSyAzH6gqMdbxKhoZwkWwfJuuopElNRU2JsU",
-    authDomain: "alotebi-3500c.firebaseapp.com",
-    projectId: "alotebi-3500c",
-    storageBucket: "alotebi-3500c.appspot.com",
-    messagingSenderId: "99457641243",
-    appId: "1:99457641243:web:b9e86295f64e4f652b81be",
-    measurementId: "G-HQF5V5FY2L"
-  };
-  firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
-  const db = firebase.firestore();
-
-  // تهيئة EmailJS
-  (function(){
-    emailjs.init('n-emjquApVgXAj-iE'); // Public Key
-  })();
-</script>
 </head>
 <body>
 
@@ -54,11 +32,11 @@
   <section class="glass">
     <h2>لوحة التحكم - معلومات العميل</h2>
     <div id="clientInfo">
-      <p><strong>الاسم:</strong> <span id="clientName"></span></p>
-      <p><strong>البريد الإلكتروني:</strong> <span id="clientEmail"></span></p>
-      <p><strong>رقم الهوية:</strong> <span id="clientId"></span></p>
-      <p><strong>المبلغ / القضية:</strong> <span id="clientAmount"></span></p>
-      <p><strong>الحالة:</strong> <span id="clientStatus"></span></p>
+      <div class="glass-card"><strong>الاسم:</strong> <span id="clientName"></span></div>
+      <div class="glass-card"><strong>البريد الإلكتروني:</strong> <span id="clientEmail"></span></div>
+      <div class="glass-card"><strong>رقم الهوية:</strong> <span id="clientId"></span></div>
+      <div class="glass-card"><strong>المبلغ / القضية:</strong> <span id="clientAmount"></span></div>
+      <div class="glass-card"><strong>الحالة:</strong> <span id="clientStatus"></span></div>
     </div>
 
     <h3>رفع مستند</h3>
@@ -75,87 +53,125 @@
   © 2025 مكتب المحامي محمد العتيبي
 </footer>
 
-<script src="script.js"></script>
 <script>
+const firebaseConfig = {
+    apiKey: "AIzaSyAzH6gqMdbxKhoZwkWwfJuuopElNRU2JsU",
+    authDomain: "alotebi-3500c.firebaseapp.com",
+    projectId: "alotebi-3500c",
+    storageBucket: "alotebi-3500c.appspot.com",
+    messagingSenderId: "99457641243",
+    appId: "1:99457641243:web:b9e86295f64e4f652b81be",
+    measurementId: "G-HQF5V5FY2L"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+const storage = firebase.storage();
+
+// قائمة الهاتف
 const menuToggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.nav');
 menuToggle.addEventListener('click', () => nav.classList.toggle('show-nav'));
 
-// التأكد من تسجيل الدخول
+// التحقق من تسجيل الدخول وجلب بيانات العميل
 auth.onAuthStateChanged(async user => {
-  if (!user) {
-    window.location.href = 'login.html';
-    return;
-  }
+    if (!user) {
+        window.location.href = 'login.html';
+        return;
+    }
 
-  // جلب بيانات العميل من Firestore
-  const doc = await db.collection('clients').doc(user.uid).get();
-  if (!doc.exists) {
-    alert('لم يتم العثور على بياناتك.');
-    return;
-  }
+    const doc = await db.collection('clients').doc(user.uid).get();
+    if (!doc.exists) {
+        alert('لم يتم العثور على بياناتك.');
+        return;
+    }
 
-  const data = doc.data();
-  document.getElementById('clientName').innerText = data.name;
-  document.getElementById('clientEmail').innerText = data.email;
-  document.getElementById('clientId').innerText = data.idNumber;
-  document.getElementById('clientAmount').innerText = data.amount;
-  document.getElementById('clientStatus').innerText = data.status;
+    const data = doc.data();
+    document.getElementById('clientName').innerText = data.name;
+    document.getElementById('clientEmail').innerText = data.email;
+    document.getElementById('clientId').innerText = data.idNumber;
+    document.getElementById('clientAmount').innerText = data.amount;
+    document.getElementById('clientStatus').innerText = data.status;
 });
 
-// تسجيل خروج
+// زر تسجيل خروج
 document.getElementById('logoutBtn').addEventListener('click', e => {
-  e.preventDefault();
-  auth.signOut().then(() => {
-    window.location.href = 'login.html';
-  });
+    e.preventDefault();
+    auth.signOut().then(() => {
+        window.location.href = 'login.html';
+    });
 });
 
-// فورم رفع الملفات عبر EmailJS
+// رفع الملفات على Firebase Storage
 const uploadForm = document.getElementById('uploadForm');
 const formMsg = document.getElementById('formMsg');
 
 uploadForm.addEventListener('submit', async e => {
-  e.preventDefault();
-  const name = document.getElementById('clientName').innerText;
-  const email = document.getElementById('clientEmail').innerText;
-  const idNumber = document.getElementById('clientId').innerText;
-  const amount = document.getElementById('clientAmount').innerText;
-  const message = document.getElementById('message').value;
-  const fileInput = document.getElementById('fileInput');
+    e.preventDefault();
+    formMsg.innerText = '';
+    const message = document.getElementById('message').value;
+    const fileInput = document.getElementById('fileInput');
 
-  if (fileInput.files.length === 0) {
-    formMsg.style.color = 'red';
-    formMsg.innerText = 'يرجى اختيار ملف';
-    return;
-  }
+    if (fileInput.files.length === 0) {
+        formMsg.style.color = 'red';
+        formMsg.innerText = 'يرجى اختيار ملف';
+        return;
+    }
 
-  const file = fileInput.files[0];
-  const reader = new FileReader();
-  reader.onload = function() {
-    const base64File = reader.result;
+    const user = auth.currentUser;
+    const file = fileInput.files[0];
+    const storageRef = storage.ref(`uploads/${user.uid}/${file.name}`);
 
-    const templateParams = {
-      name, email, idNumber, amount, message,
-      fileName: file.name,
-      fileContent: base64File
-    };
+    try {
+        // رفع الملف
+        await storageRef.put(file);
+        const downloadURL = await storageRef.getDownloadURL();
 
-    emailjs.send('service_k0kn04w','template_72zpvuq', templateParams)
-      .then(() => {
+        // تخزين الرابط والرسالة في Firestore
+        await db.collection('clients').doc(user.uid).collection('uploads').add({
+            fileName: file.name,
+            fileURL: downloadURL,
+            message,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
         formMsg.style.color = 'green';
-        formMsg.innerText = 'تم إرسال المستند بنجاح!';
+        formMsg.innerText = 'تم رفع المستند بنجاح!';
         uploadForm.reset();
-      })
-      .catch(err => {
+    } catch(err) {
         console.error(err);
         formMsg.style.color = 'red';
-        formMsg.innerText = 'حدث خطأ أثناء إرسال المستند';
-      });
-  };
-  reader.readAsDataURL(file);
+        formMsg.innerText = 'حدث خطأ أثناء رفع المستند';
+    }
 });
 </script>
+
+<style>
+.glass-card {
+  margin: 12px 0;
+  padding: 14px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+#uploadForm input, #uploadForm button {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.02);
+  color: #e6eef8;
+}
+#uploadForm button {
+  background: linear-gradient(90deg,#2f9bff,#5dc1ff);
+  color: #042033;
+  font-weight: 700;
+  cursor: pointer;
+}
+</style>
 
 </body>
 </html>
