@@ -82,24 +82,31 @@
   <!-- أيقونة المحامي الثابتة -->
   <a href="contact.html" class="lawyer-icon" title="اطلب استشارة">⚖️</a>
 
-  <!-- سكربت قائمة الجوال -->
+  <!-- سكربت قائمة الجوال (ثلاثة خطوط ثابتة) -->
   <script>
-    const menuToggle = document.querySelector('.menu-toggle');
-    const nav = document.querySelector('.nav');
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const nav = document.querySelector('.nav');
 
-    function toggleNav(e){
-      e.stopPropagation();
-      nav.classList.toggle('show-nav');
-    }
-
-    menuToggle.addEventListener('click', toggleNav);
-    menuToggle.addEventListener('touchstart', toggleNav);
-
-    // إغلاق القائمة عند الضغط خارجها
-    document.addEventListener('click', function(e){
-      if(!nav.contains(e.target) && !menuToggle.contains(e.target)){
-        nav.classList.remove('show-nav');
+      function toggleNav(e) {
+        e.stopPropagation();
+        nav.classList.toggle('show-nav');
       }
+
+      menuToggle.addEventListener('click', toggleNav);
+      menuToggle.addEventListener('touchstart', toggleNav);
+
+      // اغلاق القائمة عند الضغط في أي مكان خارجها
+      document.addEventListener('click', function(e) {
+        if (!nav.contains(e.target) && !menuToggle.contains(e.target)) {
+          nav.classList.remove('show-nav');
+        }
+      });
+
+      // اغلاق القائمة عند تمرير الصفحة لتحسين تجربة الجوال
+      window.addEventListener('scroll', function() {
+        nav.classList.remove('show-nav');
+      });
     });
   </script>
 </body>
