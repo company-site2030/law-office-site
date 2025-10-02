@@ -10,7 +10,9 @@
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script>
+
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3.2.0/dist/email.min.js"></script>
 
 </head>
 <body>
@@ -54,23 +56,20 @@
 </footer>
 
 <script>
+/* ================= Firebase Config ================= */
 const firebaseConfig = {
     apiKey: "AIzaSyAzH6gqMdbxKhoZwkWwfJuuopElNRU2JsU",
     authDomain: "alotebi-3500c.firebaseapp.com",
-    projectId: "alotebi-3500c",
-    storageBucket: "alotebi-3500c.appspot.com",
-    messagingSenderId: "99457641243",
-    appId: "1:99457641243:web:b9e86295f64e4f652b81be",
-    measurementId: "G-HQF5V5FY2L"
+    projectId: "alotebi-3500c"
 };
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
-const storage = firebase.storage();
 
-// قائمة الهاتف تعمل على الجوال والكمبيوتر
+/* ================= قائمة الهاتف تعمل على الجوال ================= */
 const menuToggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.nav');
+
 function toggleNav(e){
   e.preventDefault();
   nav.classList.toggle('show-nav');
@@ -78,19 +77,17 @@ function toggleNav(e){
 menuToggle.addEventListener('click', toggleNav);
 menuToggle.addEventListener('touchstart', toggleNav);
 
-// التحقق من تسجيل الدخول وجلب بيانات العميل
+/* ================= التحقق من تسجيل الدخول ================= */
 auth.onAuthStateChanged(async user => {
-    if (!user) {
+    if(!user){
         window.location.href = 'login.html';
         return;
     }
-
     const doc = await db.collection('clients').doc(user.uid).get();
-    if (!doc.exists) {
+    if(!doc.exists){
         alert('لم يتم العثور على بياناتك.');
         return;
     }
-
     const data = doc.data();
     document.getElementById('clientName').innerText = data.name;
     document.getElementById('clientEmail').innerText = data.email;
@@ -99,15 +96,17 @@ auth.onAuthStateChanged(async user => {
     document.getElementById('clientStatus').innerText = data.status;
 });
 
-// زر تسجيل خروج
+/* ================= تسجيل خروج ================= */
 document.getElementById('logoutBtn').addEventListener('click', e => {
     e.preventDefault();
-    auth.signOut().then(() => {
-        window.location.href = 'login.html';
-    });
+    auth.signOut().then(()=> window.location.href='login.html');
 });
 
-// رفع الملفات على Firebase Storage
+/* ================= رفع المستند باستخدام EmailJS ================= */
+(function(){
+    emailjs.init("n-emjquApVgXAj-iE"); // مفتاحك الشخصي
+})();
+
 const uploadForm = document.getElementById('uploadForm');
 const formMsg = document.getElementById('formMsg');
 
@@ -117,37 +116,39 @@ uploadForm.addEventListener('submit', async e => {
     const message = document.getElementById('message').value;
     const fileInput = document.getElementById('fileInput');
 
-    if (fileInput.files.length === 0) {
+    if(fileInput.files.length === 0){
         formMsg.style.color = 'red';
         formMsg.innerText = 'يرجى اختيار ملف';
         return;
     }
 
-    const user = auth.currentUser;
     const file = fileInput.files[0];
-    const storageRef = storage.ref(`uploads/${user.uid}/${file.name}`);
+    const reader = new FileReader();
 
-    try {
-        // رفع الملف
-        await storageRef.put(file);
-        const downloadURL = await storageRef.getDownloadURL();
+    reader.onload = async function() {
+        const fileContent = reader.result.split(',')[1]; // base64 فقط
 
-        // تخزين الرابط والرسالة في Firestore
-        await db.collection('clients').doc(user.uid).collection('uploads').add({
-            fileName: file.name,
-            fileURL: downloadURL,
-            message,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        });
-
-        formMsg.style.color = 'green';
-        formMsg.innerText = 'تم رفع المستند بنجاح!';
-        uploadForm.reset();
-    } catch(err) {
-        console.error(err);
-        formMsg.style.color = 'red';
-        formMsg.innerText = 'حدث خطأ أثناء رفع المستند';
+        try{
+            await emailjs.send("service_k0kn04w","template_72zpvuq",{
+                name: document.getElementById('clientName').innerText,
+                email: document.getElementById('clientEmail').innerText,
+                idNumber: document.getElementById('clientId').innerText,
+                amount: document.getElementById('clientAmount').innerText,
+                message: message,
+                fileName: file.name,
+                fileData: fileContent
+            });
+            formMsg.style.color = 'green';
+            formMsg.innerText = 'تم إرسال المستند بنجاح!';
+            uploadForm.reset();
+        }catch(err){
+            console.error(err);
+            formMsg.style.color = 'red';
+            formMsg.innerText = 'حدث خطأ أثناء إرسال المستند';
+        }
     }
+
+    reader.readAsDataURL(file);
 });
 </script>
 
@@ -175,6 +176,28 @@ uploadForm.addEventListener('submit', async e => {
   color: #042033;
   font-weight: 700;
   cursor: pointer;
+}
+
+/* الجوال */
+@media(max-width:900px){
+  .nav {
+    display:none;
+    flex-direction:column;
+    gap:10px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+    padding:12px;
+    border-radius:12px;
+    box-shadow:0 8px 30px rgba(2,6,23,0.6);
+    backdrop-filter: blur(12px);
+  }
+  .nav.show-nav {
+    display:flex !important;
+  }
+  .menu-toggle {
+    display:block;
+    font-size:28px;
+    cursor:pointer;
+  }
 }
 </style>
 
