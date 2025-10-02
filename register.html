@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>تسجيل حساب</title>
 <link rel="stylesheet" href="style.css">
 <script src="firebase.js"></script>
 </head>
 <body>
 <div class="header container">
-  <div class="logo">مكتب المحامي <span>محمد العتيبي</span></div>
+  <div class="logo">⚖️ مكتب المحامي <span class="lawyer-name">محمد العتيبي</span></div>
+  <div class="nav">
+    <a href="index.html#home">الرئيسية</a>
+    <a href="index.html#about">من نحن</a>
+    <a href="index.html#services">خدماتنا</a>
+    <a href="index.html#cases">قصص نجاح</a>
+    <a href="index.html#contact">تواصل</a>
+    <a href="login.html">تسجيل الدخول</a>
+    <a href="register.html">تسجيل</a>
+  </div>
   <div class="menu-toggle">☰</div>
 </div>
 
@@ -29,26 +39,49 @@
 </main>
 
 <script>
+// قائمة الجوال
+const menuToggle = document.querySelector('.menu-toggle');
+const nav = document.querySelector('.nav');
+menuToggle.addEventListener('click', () => {
+  nav.classList.toggle('active');
+});
+
+// تسجيل حساب جديد مع Firebase
 const registerForm = document.getElementById('registerForm');
 const errorMsg = document.getElementById('errorMsg');
-registerForm.addEventListener('submit', e=>{
+
+registerForm.addEventListener('submit', e => {
   e.preventDefault();
-  errorMsg.innerText='';
+  errorMsg.innerText = '';
+  
   const name = document.getElementById('name').value.trim();
   const idNumber = document.getElementById('idNumber').value.trim();
   const amount = document.getElementById('amount').value.trim();
   const email = document.getElementById('email').value.trim();
   const password = document.getElementById('password').value.trim();
-  if(!name||!idNumber||!amount||!email||!password){ errorMsg.innerText='يرجى ملء جميع الحقول'; return; }
-  auth.createUserWithEmailAndPassword(email,password)
-    .then(userCredential=>{
+
+  if (!name || !idNumber || !amount || !email || !password) { 
+    errorMsg.innerText = 'يرجى ملء جميع الحقول'; 
+    return; 
+  }
+
+  auth.createUserWithEmailAndPassword(email, password)
+    .then(userCredential => {
+      console.log('تم إنشاء الحساب بنجاح:', email);
       const uid = userCredential.user.uid;
       return db.collection('clients').doc(uid).set({
         name, idNumber, amount, email, status: 'قيد الانتظار', documents: []
       });
     })
-    .then(()=>{ registerForm.reset(); window.location.href='dashboard.html'; })
-    .catch(err=>{ errorMsg.innerText = err.message; registerForm.reset(); });
+    .then(() => {
+      registerForm.reset();
+      window.location.href = 'dashboard.html';
+    })
+    .catch(err => {
+      console.error('خطأ عند التسجيل:', err);
+      errorMsg.innerText = err.message;
+      registerForm.reset();
+    });
 });
 </script>
 </body>
