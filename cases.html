@@ -1,6 +1,82 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>قصص نجاح</title><link rel="stylesheet" href="style.css"><script src="firebase.js"></script></head><body>
-<div class="header container"><div class="logo">مكتب المحامي <span>محمد العتيبي</span></div><div class="menu-toggle">☰</div></div>
-<main class="container"><section class="glass"><h2>قصص نجاح</h2><p>نماذج نجاح</p></section></main>
-<script src="script.js"></script></body></html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>قصص نجاح - مكتب المحامي محمد العتيبي</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="قصص نجاح - مكتب المحامي محمد العتيبي">
+  <meta property="og:description" content="اطّلع على قصص نجاح عملائنا مع مكتب المحامي محمد العتيبي: استرجاع أموال، تسويات قانونية، تمثيل أمام المحاكم، وانتصارات قانونية محلية ودولية.">
+  <meta property="og:image" content="https://via.placeholder.com/1200x630.png?text=⚖️+قصص+نجاح">
+  <meta property="og:url" content="https://example.com/cases.html">
+  <meta property="og:type" content="website">
+</head>
+<body>
+  <!-- الهيدر -->
+  <div class="header container">
+    <div class="logo">⚖️ <span class="lawyer-name">مكتب المحامي محمد العتيبي</span></div>
+    <div class="nav">
+      <a href="index.html">الرئيسية</a>
+      <a href="about.html">من نحن</a>
+      <a href="services.html">خدماتنا</a>
+      <a href="cases.html" class="active">قصص نجاح</a>
+      <a href="contact.html">تواصل</a>
+      <a href="login.html">تسجيل الدخول</a>
+      <a href="register.html">تسجيل</a>
+    </div>
+    <div class="menu-toggle">☰</div>
+  </div>
+
+  <!-- المحتوى -->
+  <main class="container">
+    <section id="cases" class="glass">
+      <h2>قصص نجاح</h2>
+      <p>
+        نفتخر بأننا كنا جزءًا من العديد من النجاحات لعملائنا على مدار السنوات. 
+        مكتبنا ساهم في استرجاع ملايين الريالات، وحماية حقوق العملاء من الاحتيال 
+        والنصب، وتمثيلهم أمام المحاكم المحلية والدولية.
+      </p>
+      <div class="cases-grid">
+        <div class="case-card glass">
+          <img src="https://images.pexels.com/photos/6077165/pexels-photo-6077165.jpeg?auto=compress&cs=tinysrgb&w=600" alt="قصة نجاح 1">
+          <p>استرجاع كامل لمبلغ مستثمر تعرض للاحتيال من شركة وهمية.</p>
+        </div>
+        <div class="case-card glass">
+          <img src="https://images.pexels.com/photos/6077172/pexels-photo-6077172.jpeg?auto=compress&cs=tinysrgb&w=600" alt="قصة نجاح 2">
+          <p>تسوية قانونية ناجحة مع مؤسسة مالية كبرى لصالح عميلنا.</p>
+        </div>
+        <div class="case-card glass">
+          <img src="https://images.pexels.com/photos/6077168/pexels-photo-6077168.jpeg?auto=compress&cs=tinysrgb&w=600" alt="قصة نجاح 3">
+          <p>إلغاء عقد احتيالي دولي واسترداد الأموال للعميل.</p>
+        </div>
+        <div class="case-card glass">
+          <img src="https://images.pexels.com/photos/6077170/pexels-photo-6077170.jpeg?auto=compress&cs=tinysrgb&w=600" alt="قصة نجاح 4">
+          <p>تمثيل قانوني ناجح أمام محكمة تجارية في نزاع بملايين الريالات.</p>
+        </div>
+      </div>
+      <p>
+        نؤمن أن كل قضية هي فرصة لإحداث فرق حقيقي في حياة عملائنا، 
+        ولهذا نعمل بشغف وإصرار لتحقيق أفضل النتائج الممكنة.
+      </p>
+    </section>
+  </main>
+
+  <!-- الفوتر -->
+  <footer class="container" style="text-align:center;padding:24px 0;color:rgba(255,255,255,0.6)">
+    © 2025 مكتب المحامي محمد العتيبي
+  </footer>
+
+  <!-- أيقونة المحامي الثابتة -->
+  <a href="contact.html" class="lawyer-icon" title="اطلب استشارة">⚖️</a>
+
+  <script>
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.nav');
+    menuToggle.addEventListener('click', () => {
+      nav.classList.toggle('show-nav');
+    });
+  </script>
+</body>
+</html>
