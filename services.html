@@ -63,11 +63,17 @@
   <a href="contact.html" class="lawyer-icon" title="اطلب استشارة">⚖️</a>
 
   <script>
+    // الهيدر 3 خطوط للجوال تعمل على كل الصفحات
     const menuToggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('.nav');
-    menuToggle.addEventListener('click', () => {
+
+    function toggleNav(e){
+      e.preventDefault();
       nav.classList.toggle('show-nav');
-    });
+    }
+
+    menuToggle.addEventListener('click', toggleNav);
+    menuToggle.addEventListener('touchstart', toggleNav);
   </script>
 </body>
 </html>
